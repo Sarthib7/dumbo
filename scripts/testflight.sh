@@ -11,7 +11,12 @@ BUILD_NUMBER="${BUILD_NUMBER:-$(date -u +%Y%m%d%H%M)}"
 OUT="${OUT:-build-testflight}"
 
 KEY_PATH="$(mktemp -d)/AuthKey_${ASC_KEY_ID}.p8"
-printf '%s\n' "$ASC_KEY_P8" > "$KEY_PATH"
+if printf '%s' "$ASC_KEY_P8" | grep -q 'BEGIN PRIVATE KEY'; then
+  printf '%s\n' "$ASC_KEY_P8" > "$KEY_PATH"
+else
+  # Accept the bare base64 body too.
+  { echo "-----BEGIN PRIVATE KEY-----"; printf '%s' "$ASC_KEY_P8" | tr -d ' \n\r' | fold -w 64; echo; echo "-----END PRIVATE KEY-----"; } > "$KEY_PATH"
+fi
 trap 'rm -f "$KEY_PATH"' EXIT
 AUTH=(-allowProvisioningUpdates -authenticationKeyPath "$KEY_PATH" -authenticationKeyID "$ASC_KEY_ID" -authenticationKeyIssuerID "$ASC_ISSUER_ID")
 
