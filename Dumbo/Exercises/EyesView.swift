@@ -6,6 +6,7 @@ struct EyesView: View {
     static let duration = 20.0
     static let cycle = 5.0
     let line: String
+    let style: ParticleStyle
     let onDone: () -> Void
     @State private var start = Date()
     @State private var finished = false
@@ -13,8 +14,6 @@ struct EyesView: View {
     var body: some View {
         TimelineView(.animation) { tl in
             let t = tl.date.timeIntervalSince(start)
-            let p = t.truncatingRemainder(dividingBy: Self.cycle) / Self.cycle
-            let far = p < 0.5 ? ease(p / 0.5) : 1 - ease((p - 0.5) / 0.5)
             let left = max(0, Self.duration - t)
             VStack(spacing: 0) {
                 Text(line)
@@ -23,21 +22,8 @@ struct EyesView: View {
                     .padding(.horizontal, 30)
                     .padding(.top, 90)
                 Spacer()
-                ZStack {
-                    Rectangle()
-                        .fill(LinearGradient(colors: [Palette.eyes.opacity(0), Palette.eyes.opacity(0.5), Palette.eyes.opacity(0)],
-                                             startPoint: .leading, endPoint: .trailing))
-                        .frame(height: 1)
-                        .offset(y: -90)
-                    Circle()
-                        .fill(RadialGradient(colors: [.white, Palette.eyes, Palette.eyes.opacity(0.6)], center: .center, startRadius: 0, endRadius: 50))
-                        .frame(width: 100, height: 100)
-                        .scaleEffect(1.1 - 0.95 * far)
-                        .offset(y: 70 - 160 * far)
-                        .shadow(color: Palette.eyes.opacity(0.8), radius: 30 * (1 - far) + 6)
-                        .opacity(1 - 0.35 * far)
-                }
-                .frame(height: 300)
+                MorphView(shape: .eyes, style: style, from: .heart, freeze: frozenTime)
+                    .frame(width: 320, height: 300)
                 Spacer()
                 ZStack {
                     Circle().stroke(Color.white.opacity(0.08), lineWidth: 4)

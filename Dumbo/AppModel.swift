@@ -171,6 +171,10 @@ final class AppModel: ObservableObject {
             data = SampleData.make(now: .now, settings: s)
             store.save(data)
         }
+        if let style = d.string(forKey: "style").flatMap(ParticleStyle.init(rawValue:)) {
+            data.settings.style = style
+            store.save(data)
+        }
         if d.bool(forKey: "onboarding") {
             data.settings.onboarded = false
             store.save(data)

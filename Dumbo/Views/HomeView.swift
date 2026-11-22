@@ -18,9 +18,8 @@ struct HomeView: View {
                 }
 
                 VStack(spacing: 6) {
-                    HeartView(energy: model.energy)
-                        .frame(width: 190, height: 190)
-                        .animation(.easeInOut(duration: 0.6), value: model.energy)
+                    MorphView(shape: .heart, energy: model.energy, style: model.settings.style)
+                        .frame(width: 220, height: 220)
                     Text("\(Int(model.energy.rounded()))%")
                         .font(.system(size: 56, weight: .bold, design: .rounded))
                         .foregroundStyle(Palette.ember)

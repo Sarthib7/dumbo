@@ -19,6 +19,9 @@ struct SettingsView: View {
                 } header: { Text("Energy") } footer: { Text("How long the screen can stay on before your energy hits 0%.") }
 
                 Section("Nudges") {
+                    Picker("Style", selection: binding(\.style)) {
+                        ForEach(ParticleStyle.allCases) { Text($0.title).tag($0) }
+                    }
                     Picker("Tone", selection: binding(\.tone)) {
                         ForEach(Tone.allCases) { Text($0.title).tag($0) }
                     }

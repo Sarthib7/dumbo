@@ -73,78 +73,10 @@ public struct IslandGlyph: View {
     }
 
     public var body: some View {
-        Group {
-            switch state.prompt {
-            case nil: HeartView(energy: state.energy, pulse: size >= 28)
-            case .empty: HeartView(energy: 0, pulse: size >= 28)
-            case .breathe: BreathGlyph(start: state.promptStart, size: size)
-            case .sip: GlassGlyph(fill: Double(state.glasses) / Double(max(1, state.waterGoal)), size: size)
-            case .eyes: FocusGlyph(size: size)
-            }
-        }
-        .frame(width: size, height: size)
-    }
-}
-
-struct BreathGlyph: View {
-    let start: Date
-    let size: CGFloat
-    var body: some View {
-        ZStack {
-            Circle()
-                .fill(RadialGradient(colors: [Color(red: 1, green: 0.48, blue: 0.58), Palette.breath, Palette.breath.opacity(0)],
-                                     center: .center, startRadius: 0, endRadius: size * 0.36))
-                .padding(size * 0.14)
-            Circle().stroke(Palette.breath.opacity(0.18), lineWidth: max(1.5, size * 0.07))
-        }
-        .shadow(color: Palette.breath.opacity(0.6), radius: size / 6)
-    }
-}
-
-struct GlassShape: Shape {
-    func path(in r: CGRect) -> Path {
-        var p = Path()
-        let inset = r.width * 0.12
-        p.move(to: CGPoint(x: r.minX, y: r.minY))
-        p.addLine(to: CGPoint(x: r.maxX, y: r.minY))
-        p.addLine(to: CGPoint(x: r.maxX - inset, y: r.maxY))
-        p.addLine(to: CGPoint(x: r.minX + inset, y: r.maxY))
-        p.closeSubpath()
-        return p
-    }
-}
-
-struct GlassGlyph: View {
-    let fill: Double
-    let size: CGFloat
-    var body: some View {
-        let f = max(0.12, min(1, fill))
-        ZStack {
-            GlassShape().fill(Palette.water.opacity(0.85))
-                .mask(alignment: .bottom) { Rectangle().frame(height: size * 0.72 * f) }
-            GlassShape().stroke(Palette.water, style: StrokeStyle(lineWidth: max(1.2, size * 0.06), lineJoin: .round))
-        }
-        .frame(width: size * 0.62, height: size * 0.72)
-        .offset(y: size * 0.06)
-        .overlay(alignment: .top) {
-            Circle().fill(Palette.water).frame(width: size * 0.12).offset(x: size * 0.18, y: -size * 0.08)
-        }
-        .shadow(color: Palette.water.opacity(0.55), radius: size / 7)
-    }
-}
-
-/// A near ring and a far dot on the horizon.
-struct FocusGlyph: View {
-    let size: CGFloat
-    var body: some View {
-        ZStack {
-            Capsule().fill(LinearGradient(colors: [Palette.eyes.opacity(0), Palette.eyes.opacity(0.6), Palette.eyes.opacity(0)],
-                                          startPoint: .leading, endPoint: .trailing))
-                .frame(height: max(1, size * 0.04))
-            Circle().stroke(Palette.eyes.opacity(0.35), lineWidth: max(1, size * 0.04)).padding(size * 0.12)
-            Circle().fill(Palette.eyes).frame(width: size * 0.2)
-        }
-        .shadow(color: Palette.eyes.opacity(0.7), radius: size / 7)
+        MorphGlyph(shape: MorphShape(state.prompt), count: size < 30 ? 60 : 120,
+                   energy: state.prompt == .empty ? 0 : state.energy,
+                   level: max(0.3, Double(state.glasses) / Double(max(1, state.waterGoal))))
+            .frame(width: size, height: size)
     }
 }
 

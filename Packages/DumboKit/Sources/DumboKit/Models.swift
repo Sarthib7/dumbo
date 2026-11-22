@@ -38,8 +38,23 @@ public struct Settings: Codable, Equatable, Sendable {
     public var promptEveryMinutes: Int = 10
     public var onboarded: Bool = false
     public var demo: Bool = false
+    public var style: ParticleStyle = .dots
 
     public init() {}
+
+    /// Missing keys fall back to defaults so older saved data keeps loading.
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        let d = Settings()
+        mode = try c.decodeIfPresent(Mode.self, forKey: .mode) ?? d.mode
+        tone = try c.decodeIfPresent(Tone.self, forKey: .tone) ?? d.tone
+        waterGoal = try c.decodeIfPresent(Int.self, forKey: .waterGoal) ?? d.waterGoal
+        dailyGoalMinutes = try c.decodeIfPresent(Int.self, forKey: .dailyGoalMinutes) ?? d.dailyGoalMinutes
+        promptEveryMinutes = try c.decodeIfPresent(Int.self, forKey: .promptEveryMinutes) ?? d.promptEveryMinutes
+        onboarded = try c.decodeIfPresent(Bool.self, forKey: .onboarded) ?? d.onboarded
+        demo = try c.decodeIfPresent(Bool.self, forKey: .demo) ?? d.demo
+        style = try c.decodeIfPresent(ParticleStyle.self, forKey: .style) ?? d.style
+    }
 }
 
 public struct Session: Codable, Identifiable, Equatable, Sendable {

@@ -9,10 +9,10 @@ struct ExerciseView: View {
         Color.black.ignoresSafeArea()
             .overlay {
                 switch kind {
-                case .breathe, .empty: BreatheView { model.finish(.breathe) }
-                case .sip: SipView(glasses: model.island.glasses, goal: model.settings.waterGoal) { model.finish(.sip) }
+                case .breathe, .empty: BreatheView(style: model.settings.style) { model.finish(.breathe) }
+                case .sip: SipView(glasses: model.island.glasses, goal: model.settings.waterGoal, style: model.settings.style) { model.finish(.sip) }
                 case .eyes: EyesView(line: model.data.activePrompt?.kind == .eyes ? model.data.activePrompt!.line
-                                     : LineDeck.line(.eyes, tone: model.settings.tone)) { model.finish(.eyes) }
+                                     : LineDeck.line(.eyes, tone: model.settings.tone), style: model.settings.style) { model.finish(.eyes) }
                 }
             }
             .overlay(alignment: .topTrailing) {
