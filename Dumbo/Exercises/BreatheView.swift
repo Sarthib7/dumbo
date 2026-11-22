@@ -59,7 +59,7 @@ struct BreatheView: View {
             }
         }
         .task {
-            try? await Task.sleep(for: .seconds(Self.cycle * Double(Self.breaths)))
+            guard (try? await Task.sleep(for: .seconds(Self.cycle * Double(Self.breaths)))) != nil else { return }
             onDone()
         }
     }

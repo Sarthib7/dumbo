@@ -8,6 +8,7 @@ struct EyesView: View {
     let line: String
     let onDone: () -> Void
     @State private var start = Date()
+    @State private var finished = false
 
     var body: some View {
         TimelineView(.animation) { tl in
@@ -46,13 +47,19 @@ struct EyesView: View {
                     Text("\(Int(ceil(left)))").font(.system(size: 22, weight: .bold, design: .rounded)).monospacedDigit()
                 }
                 .frame(width: 64, height: 64)
-                Button(action: onDone) { IslandPill(title: "done", color: Palette.eyes).scaleEffect(1.2) }
+                Button(action: finish) { IslandPill(title: "done", color: Palette.eyes).scaleEffect(1.2) }
                     .padding(.top, 22).padding(.bottom, 50)
             }
         }
         .task {
-            try? await Task.sleep(for: .seconds(Self.duration))
-            onDone()
+            guard (try? await Task.sleep(for: .seconds(Self.duration))) != nil else { return }
+            finish()
         }
+    }
+
+    private func finish() {
+        guard !finished else { return }
+        finished = true
+        onDone()
     }
 }
