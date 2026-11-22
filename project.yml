@@ -1,0 +1,102 @@
+name: Dumbo
+options:
+  bundleIdPrefix: com.sarthib7
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+    TARGETED_DEVICE_FAMILY: "1"
+packages:
+  DumboKit:
+    path: Packages/DumboKit
+targets:
+  Dumbo:
+    type: application
+    platform: iOS
+    sources:
+      - Dumbo
+      - Shared
+    dependencies:
+      - package: DumboKit
+      - target: DumboWidgets
+      - target: DumboMonitor
+    entitlements:
+      path: Dumbo/Dumbo.entitlements
+      properties:
+        com.apple.security.application-groups: [group.com.sarthib7.dumbo]
+        com.apple.developer.family-controls: true
+    info:
+      path: Dumbo/Info.plist
+      properties:
+        CFBundleDisplayName: Dumbo
+        CFBundleURLTypes:
+          - CFBundleURLName: com.sarthib7.dumbo
+            CFBundleURLSchemes: [dumbo]
+        NSSupportsLiveActivities: true
+        UILaunchScreen:
+          UIColorName: LaunchBackground
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        UIUserInterfaceStyle: Dark
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.sarthib7.dumbo
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+  DumboWidgets:
+    type: app-extension
+    platform: iOS
+    sources:
+      - DumboWidgets
+      - Shared
+    dependencies:
+      - package: DumboKit
+      - sdk: WidgetKit.framework
+      - sdk: SwiftUI.framework
+    entitlements:
+      path: DumboWidgets/DumboWidgets.entitlements
+      properties:
+        com.apple.security.application-groups: [group.com.sarthib7.dumbo]
+    info:
+      path: DumboWidgets/Info.plist
+      properties:
+        CFBundleDisplayName: Dumbo
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.sarthib7.dumbo.widgets
+  DumboMonitor:
+    type: app-extension
+    platform: iOS
+    sources:
+      - DumboMonitor
+    dependencies:
+      - package: DumboKit
+    entitlements:
+      path: DumboMonitor/DumboMonitor.entitlements
+      properties:
+        com.apple.security.application-groups: [group.com.sarthib7.dumbo]
+        com.apple.developer.family-controls: true
+    info:
+      path: DumboMonitor/Info.plist
+      properties:
+        CFBundleDisplayName: DumboMonitor
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.deviceactivity.monitor-extension
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).DumboMonitorExtension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.sarthib7.dumbo.monitor
+schemes:
+  Dumbo:
+    build:
+      targets:
+        Dumbo: all
+    run:
+      config: Debug

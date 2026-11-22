@@ -1,0 +1,720 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0ACDD64C791F166CDCA347A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C4B2B7D50EB401E5CD70EAC /* Assets.xcassets */; };
+		0D777E57E12E9B68517D3E69 /* silence.caf in Resources */ = {isa = PBXBuildFile; fileRef = 97D814057CBFF6A16D7DACAA /* silence.caf */; };
+		1AE06AC3A98CC0B940D54B89 /* DumboMonitorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC6A732A81082F04D5B1C7C /* DumboMonitorExtension.swift */; };
+		20699E73833F52D58447917D /* ExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F479BC799B6225613958617B /* ExerciseView.swift */; };
+		2748BB320498E1BA077339D1 /* DumboKit in Frameworks */ = {isa = PBXBuildFile; productRef = B2BD8592155365E2F70416A7 /* DumboKit */; };
+		28E26FBB8361292DAE62F7C4 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D65C2D36226AAF55973695 /* SummaryView.swift */; };
+		426F83230E057DB3A20B49B4 /* DumboLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AECA2E6F7F442331FD5E1DE /* DumboLiveActivity.swift */; };
+		478CD1138FB3DA3987E9121F /* DumboWidgetsBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DCC55C96C91C2CEFE7124 /* DumboWidgetsBundle.swift */; };
+		48B374F15A24607308B31A29 /* DumboApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F7420F2BA047B6679146A7 /* DumboApp.swift */; };
+		4C180F0085314F1568A774B5 /* SipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6241FB1E4948B1DD8C4114 /* SipView.swift */; };
+		50F611220E89411AF363B982 /* Intents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D907FC07BD18676D09C4D1 /* Intents.swift */; };
+		53F2EA1349AFA74E99EA328E /* Intents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D907FC07BD18676D09C4D1 /* Intents.swift */; };
+		57A3667F482E7AF17910FCFF /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6A5D8A91C98C28AC61EEB3 /* AppModel.swift */; };
+		5D09EED9BFEE8B048DC51E71 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28900073C57662AD747D253D /* WidgetKit.framework */; };
+		6261EC328CFB413A0817D65B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB1F0615C7BBEA32FA1870E2 /* SwiftUI.framework */; };
+		629CF05DC36E666FCE866185 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B495E4140DCED774D5993598 /* RootView.swift */; };
+		79AEDC0CC5CFD92E5EF75F9B /* DumboKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8421EA589A7DD1AD46D6C0C1 /* DumboKit */; };
+		8858F6EE5D224FF89A9130BE /* ScreenTimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A677C5D547BEB07A524EB0C /* ScreenTimeService.swift */; };
+		9FD3C320FA9789EFB2163ED9 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0510D449BA73BACFB3B4A00 /* OnboardingView.swift */; };
+		A1AA0D1836F756F6856EAA70 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DD65540415A3650D8C3120 /* HomeView.swift */; };
+		A888C70D6E1F3C52BD6A307C /* EyesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8223B9744ABCE2803D13AC7F /* EyesView.swift */; };
+		B4D5839079E10D462BB72E3D /* DumboWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E26A5702FF4C2F455A90E4B4 /* DumboWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C4ABC3B576908C59DF4EF7C0 /* DumboMonitor.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B7D638C8097FF7C9F00F04AE /* DumboMonitor.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CED16011396D0C11A14A507A /* TodayWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012598F531AAB84C2370751B /* TodayWidget.swift */; };
+		D7CD77FAFABF2FA7A6676F5F /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD66D1F7CDEB8D603C02609F /* SampleData.swift */; };
+		E30033002BC074B963E110C0 /* BreatheView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14F31AA057F9D9BEACF14B /* BreatheView.swift */; };
+		F2175D5D286DE4A2097119B5 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67F89AD9AD4DCD1C826BE6F /* SettingsView.swift */; };
+		F54CB960A502651570CB907B /* DumboKit in Frameworks */ = {isa = PBXBuildFile; productRef = 85A95B66B70CB1EFF1D7B680 /* DumboKit */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		331C23003D307F526819F36E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 85B8FA23B32DB086E18D4F5F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 687C28F6E385156F48A2A385;
+			remoteInfo = DumboWidgets;
+		};
+		65D43A111A1A9A9582502B48 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 85B8FA23B32DB086E18D4F5F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7FDC01E5BEF9D256B75EE707;
+			remoteInfo = DumboMonitor;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BDA58101A5F9F52EAB6F83B6 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B4D5839079E10D462BB72E3D /* DumboWidgets.appex in Embed Foundation Extensions */,
+				C4ABC3B576908C59DF4EF7C0 /* DumboMonitor.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		012598F531AAB84C2370751B /* TodayWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWidget.swift; sourceTree = "<group>"; };
+		0A677C5D547BEB07A524EB0C /* ScreenTimeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeService.swift; sourceTree = "<group>"; };
+		1262BBCFD79AFEECBEFD4802 /* DumboMonitor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DumboMonitor.entitlements; sourceTree = "<group>"; };
+		19495A8A835F4023F3BF2AB1 /* Dumbo.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Dumbo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1AF70F9A0EE372C87A11E656 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		1B6241FB1E4948B1DD8C4114 /* SipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SipView.swift; sourceTree = "<group>"; };
+		1CA0A8EBC4626C26E41A97C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		1E606FDDFCB0D4D9EF39D2EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		20D65C2D36226AAF55973695 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
+		28900073C57662AD747D253D /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		2AC6A732A81082F04D5B1C7C /* DumboMonitorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumboMonitorExtension.swift; sourceTree = "<group>"; };
+		2B6A5D8A91C98C28AC61EEB3 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		3C4B2B7D50EB401E5CD70EAC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4C14F31AA057F9D9BEACF14B /* BreatheView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreatheView.swift; sourceTree = "<group>"; };
+		58D907FC07BD18676D09C4D1 /* Intents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intents.swift; sourceTree = "<group>"; };
+		6AECA2E6F7F442331FD5E1DE /* DumboLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumboLiveActivity.swift; sourceTree = "<group>"; };
+		7ABF847892FA85497648B276 /* Dumbo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dumbo.entitlements; sourceTree = "<group>"; };
+		8223B9744ABCE2803D13AC7F /* EyesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyesView.swift; sourceTree = "<group>"; };
+		9093AF866E55C98E2874FED9 /* DumboKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = DumboKit; path = Packages/DumboKit; sourceTree = SOURCE_ROOT; };
+		95F7420F2BA047B6679146A7 /* DumboApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumboApp.swift; sourceTree = "<group>"; };
+		97D814057CBFF6A16D7DACAA /* silence.caf */ = {isa = PBXFileReference; path = silence.caf; sourceTree = "<group>"; };
+		B0510D449BA73BACFB3B4A00 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		B13DCC55C96C91C2CEFE7124 /* DumboWidgetsBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumboWidgetsBundle.swift; sourceTree = "<group>"; };
+		B495E4140DCED774D5993598 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		B5DD65540415A3650D8C3120 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		B67F89AD9AD4DCD1C826BE6F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		B7D638C8097FF7C9F00F04AE /* DumboMonitor.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = DumboMonitor.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		C467DC7A3A5DF9280201CEEE /* DumboWidgets.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DumboWidgets.entitlements; sourceTree = "<group>"; };
+		CB1F0615C7BBEA32FA1870E2 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		E26A5702FF4C2F455A90E4B4 /* DumboWidgets.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = DumboWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F479BC799B6225613958617B /* ExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseView.swift; sourceTree = "<group>"; };
+		FD66D1F7CDEB8D603C02609F /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		020FF8CFC04BA2DD3EE19C96 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F54CB960A502651570CB907B /* DumboKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		10AB1FCE16F00BB091C07EA9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2748BB320498E1BA077339D1 /* DumboKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AAD6D91E2BD64EF96CD95C6F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				79AEDC0CC5CFD92E5EF75F9B /* DumboKit in Frameworks */,
+				5D09EED9BFEE8B048DC51E71 /* WidgetKit.framework in Frameworks */,
+				6261EC328CFB413A0817D65B /* SwiftUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		12ADAF3734C9D300500BB8E7 /* Exercises */ = {
+			isa = PBXGroup;
+			children = (
+				4C14F31AA057F9D9BEACF14B /* BreatheView.swift */,
+				F479BC799B6225613958617B /* ExerciseView.swift */,
+				8223B9744ABCE2803D13AC7F /* EyesView.swift */,
+				1B6241FB1E4948B1DD8C4114 /* SipView.swift */,
+			);
+			path = Exercises;
+			sourceTree = "<group>";
+		};
+		304CA6ABB3F507D74C7D25C0 = {
+			isa = PBXGroup;
+			children = (
+				E7EFBBDF474351972A256344 /* Dumbo */,
+				7113BDA49F1BA1680169AD6D /* DumboMonitor */,
+				C8F22C2C5CF803F880A0EC2D /* DumboWidgets */,
+				F33DF7784E55B0FB6341AA8E /* Packages */,
+				E7E9B76FE917724E6314A38D /* Shared */,
+				DE89FDBB6D9DC00F2C975350 /* Frameworks */,
+				3B899F53C89FDFD8BE39294C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3B899F53C89FDFD8BE39294C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				19495A8A835F4023F3BF2AB1 /* Dumbo.app */,
+				B7D638C8097FF7C9F00F04AE /* DumboMonitor.appex */,
+				E26A5702FF4C2F455A90E4B4 /* DumboWidgets.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6F75CBF42183B78E500D6B96 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B5DD65540415A3650D8C3120 /* HomeView.swift */,
+				B0510D449BA73BACFB3B4A00 /* OnboardingView.swift */,
+				B495E4140DCED774D5993598 /* RootView.swift */,
+				B67F89AD9AD4DCD1C826BE6F /* SettingsView.swift */,
+				20D65C2D36226AAF55973695 /* SummaryView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7113BDA49F1BA1680169AD6D /* DumboMonitor */ = {
+			isa = PBXGroup;
+			children = (
+				1262BBCFD79AFEECBEFD4802 /* DumboMonitor.entitlements */,
+				2AC6A732A81082F04D5B1C7C /* DumboMonitorExtension.swift */,
+				1AF70F9A0EE372C87A11E656 /* Info.plist */,
+			);
+			path = DumboMonitor;
+			sourceTree = "<group>";
+		};
+		C8F22C2C5CF803F880A0EC2D /* DumboWidgets */ = {
+			isa = PBXGroup;
+			children = (
+				6AECA2E6F7F442331FD5E1DE /* DumboLiveActivity.swift */,
+				C467DC7A3A5DF9280201CEEE /* DumboWidgets.entitlements */,
+				B13DCC55C96C91C2CEFE7124 /* DumboWidgetsBundle.swift */,
+				1CA0A8EBC4626C26E41A97C9 /* Info.plist */,
+				012598F531AAB84C2370751B /* TodayWidget.swift */,
+			);
+			path = DumboWidgets;
+			sourceTree = "<group>";
+		};
+		DE89FDBB6D9DC00F2C975350 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CB1F0615C7BBEA32FA1870E2 /* SwiftUI.framework */,
+				28900073C57662AD747D253D /* WidgetKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E7E9B76FE917724E6314A38D /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				58D907FC07BD18676D09C4D1 /* Intents.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		E7EFBBDF474351972A256344 /* Dumbo */ = {
+			isa = PBXGroup;
+			children = (
+				2B6A5D8A91C98C28AC61EEB3 /* AppModel.swift */,
+				3C4B2B7D50EB401E5CD70EAC /* Assets.xcassets */,
+				7ABF847892FA85497648B276 /* Dumbo.entitlements */,
+				95F7420F2BA047B6679146A7 /* DumboApp.swift */,
+				1E606FDDFCB0D4D9EF39D2EF /* Info.plist */,
+				FD66D1F7CDEB8D603C02609F /* SampleData.swift */,
+				0A677C5D547BEB07A524EB0C /* ScreenTimeService.swift */,
+				97D814057CBFF6A16D7DACAA /* silence.caf */,
+				12ADAF3734C9D300500BB8E7 /* Exercises */,
+				6F75CBF42183B78E500D6B96 /* Views */,
+			);
+			path = Dumbo;
+			sourceTree = "<group>";
+		};
+		F33DF7784E55B0FB6341AA8E /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				9093AF866E55C98E2874FED9 /* DumboKit */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		19650701258147C05522544C /* Dumbo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FAAA3AD720AA4CCB750E7665 /* Build configuration list for PBXNativeTarget "Dumbo" */;
+			buildPhases = (
+				0CE0128537171B1B9CEB9E0C /* Sources */,
+				7EA0C2A5BA1CFF999C351BE8 /* Resources */,
+				020FF8CFC04BA2DD3EE19C96 /* Frameworks */,
+				BDA58101A5F9F52EAB6F83B6 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				88F12B5A7E42A6A0D6245F32 /* PBXTargetDependency */,
+				F33023DDD8F299FEFAC60358 /* PBXTargetDependency */,
+			);
+			name = Dumbo;
+			packageProductDependencies = (
+				85A95B66B70CB1EFF1D7B680 /* DumboKit */,
+			);
+			productName = Dumbo;
+			productReference = 19495A8A835F4023F3BF2AB1 /* Dumbo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		687C28F6E385156F48A2A385 /* DumboWidgets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 23AF389E74ECFC6841FBD6E0 /* Build configuration list for PBXNativeTarget "DumboWidgets" */;
+			buildPhases = (
+				E6B5F67F069FAC700E9CFAF7 /* Sources */,
+				AAD6D91E2BD64EF96CD95C6F /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DumboWidgets;
+			packageProductDependencies = (
+				8421EA589A7DD1AD46D6C0C1 /* DumboKit */,
+			);
+			productName = DumboWidgets;
+			productReference = E26A5702FF4C2F455A90E4B4 /* DumboWidgets.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		7FDC01E5BEF9D256B75EE707 /* DumboMonitor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 02F3516CACAC30C677569126 /* Build configuration list for PBXNativeTarget "DumboMonitor" */;
+			buildPhases = (
+				1E9566ABBD206EE0219EF6B7 /* Sources */,
+				10AB1FCE16F00BB091C07EA9 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DumboMonitor;
+			packageProductDependencies = (
+				B2BD8592155365E2F70416A7 /* DumboKit */,
+			);
+			productName = DumboMonitor;
+			productReference = B7D638C8097FF7C9F00F04AE /* DumboMonitor.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		85B8FA23B32DB086E18D4F5F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					19650701258147C05522544C = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+					687C28F6E385156F48A2A385 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+					7FDC01E5BEF9D256B75EE707 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 0AA1AD34DD4AB25C2097E8AF /* Build configuration list for PBXProject "Dumbo" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 304CA6ABB3F507D74C7D25C0;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				E73ACC26D3CBE2628717AD16 /* XCLocalSwiftPackageReference "Packages/DumboKit" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 3B899F53C89FDFD8BE39294C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				19650701258147C05522544C /* Dumbo */,
+				687C28F6E385156F48A2A385 /* DumboWidgets */,
+				7FDC01E5BEF9D256B75EE707 /* DumboMonitor */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7EA0C2A5BA1CFF999C351BE8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0ACDD64C791F166CDCA347A6 /* Assets.xcassets in Resources */,
+				0D777E57E12E9B68517D3E69 /* silence.caf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0CE0128537171B1B9CEB9E0C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57A3667F482E7AF17910FCFF /* AppModel.swift in Sources */,
+				E30033002BC074B963E110C0 /* BreatheView.swift in Sources */,
+				48B374F15A24607308B31A29 /* DumboApp.swift in Sources */,
+				20699E73833F52D58447917D /* ExerciseView.swift in Sources */,
+				A888C70D6E1F3C52BD6A307C /* EyesView.swift in Sources */,
+				A1AA0D1836F756F6856EAA70 /* HomeView.swift in Sources */,
+				50F611220E89411AF363B982 /* Intents.swift in Sources */,
+				9FD3C320FA9789EFB2163ED9 /* OnboardingView.swift in Sources */,
+				629CF05DC36E666FCE866185 /* RootView.swift in Sources */,
+				D7CD77FAFABF2FA7A6676F5F /* SampleData.swift in Sources */,
+				8858F6EE5D224FF89A9130BE /* ScreenTimeService.swift in Sources */,
+				F2175D5D286DE4A2097119B5 /* SettingsView.swift in Sources */,
+				4C180F0085314F1568A774B5 /* SipView.swift in Sources */,
+				28E26FBB8361292DAE62F7C4 /* SummaryView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1E9566ABBD206EE0219EF6B7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1AE06AC3A98CC0B940D54B89 /* DumboMonitorExtension.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E6B5F67F069FAC700E9CFAF7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				426F83230E057DB3A20B49B4 /* DumboLiveActivity.swift in Sources */,
+				478CD1138FB3DA3987E9121F /* DumboWidgetsBundle.swift in Sources */,
+				53F2EA1349AFA74E99EA328E /* Intents.swift in Sources */,
+				CED16011396D0C11A14A507A /* TodayWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		88F12B5A7E42A6A0D6245F32 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 687C28F6E385156F48A2A385 /* DumboWidgets */;
+			targetProxy = 331C23003D307F526819F36E /* PBXContainerItemProxy */;
+		};
+		F33023DDD8F299FEFAC60358 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7FDC01E5BEF9D256B75EE707 /* DumboMonitor */;
+			targetProxy = 65D43A111A1A9A9582502B48 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0B0E0ABBEB482F532A1B8BE4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		2439CA540FDF234233223988 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		3F2E43C49E74916D7B4F218C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Dumbo/Dumbo.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = Dumbo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sarthib7.dumbo;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		56A1158778C660C7DE2FCA82 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = DumboWidgets/DumboWidgets.entitlements;
+				INFOPLIST_FILE = DumboWidgets/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sarthib7.dumbo.widgets;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5DAD0D5DC424B78F91D20BC7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = DumboWidgets/DumboWidgets.entitlements;
+				INFOPLIST_FILE = DumboWidgets/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sarthib7.dumbo.widgets;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		5DEC427930B6C06983742EF7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = DumboMonitor/DumboMonitor.entitlements;
+				INFOPLIST_FILE = DumboMonitor/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sarthib7.dumbo.monitor;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		789EB0BF6246CC04FB4D6234 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Dumbo/Dumbo.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = Dumbo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sarthib7.dumbo;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B1B23593829694DF2E88D732 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = DumboMonitor/DumboMonitor.entitlements;
+				INFOPLIST_FILE = DumboMonitor/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sarthib7.dumbo.monitor;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		02F3516CACAC30C677569126 /* Build configuration list for PBXNativeTarget "DumboMonitor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B1B23593829694DF2E88D732 /* Debug */,
+				5DEC427930B6C06983742EF7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		0AA1AD34DD4AB25C2097E8AF /* Build configuration list for PBXProject "Dumbo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2439CA540FDF234233223988 /* Debug */,
+				0B0E0ABBEB482F532A1B8BE4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		23AF389E74ECFC6841FBD6E0 /* Build configuration list for PBXNativeTarget "DumboWidgets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				56A1158778C660C7DE2FCA82 /* Debug */,
+				5DAD0D5DC424B78F91D20BC7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		FAAA3AD720AA4CCB750E7665 /* Build configuration list for PBXNativeTarget "Dumbo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				789EB0BF6246CC04FB4D6234 /* Debug */,
+				3F2E43C49E74916D7B4F218C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		E73ACC26D3CBE2628717AD16 /* XCLocalSwiftPackageReference "Packages/DumboKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/DumboKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8421EA589A7DD1AD46D6C0C1 /* DumboKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DumboKit;
+		};
+		85A95B66B70CB1EFF1D7B680 /* DumboKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DumboKit;
+		};
+		B2BD8592155365E2F70416A7 /* DumboKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DumboKit;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 85B8FA23B32DB086E18D4F5F /* Project object */;
+}
