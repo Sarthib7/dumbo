@@ -45,9 +45,11 @@ def query(path, **params):
     return call("GET", path + "?" + urllib.parse.urlencode(params))["data"]
 
 
-certs = [c["id"] for c in query("/v1/certificates", **{"filter[certificateType]": "DISTRIBUTION,IOS_DISTRIBUTION", "limit": 200})]
+certs = query("/v1/certificates", **{"filter[certificateType]": "DISTRIBUTION,IOS_DISTRIBUTION", "limit": 200})
 if not certs:
     sys.exit("No Apple Distribution certificate on the team")
+# App Store profiles take a single certificate; use the newest one (override with DUMBO_CERT_ID).
+cert = os.environ.get("DUMBO_CERT_ID") or max(certs, key=lambda c: c["attributes"]["expirationDate"])["id"]
 
 dirs = [os.path.expanduser(p) for p in ("~/Library/MobileDevice/Provisioning Profiles",
                                          "~/Library/Developer/Xcode/UserData/Provisioning Profiles")]
@@ -57,11 +59,12 @@ for bundle in sys.argv[2:]:
         sys.exit(f"Bundle ID {bundle} is not registered")
     name = f"Dumbo AppStore {bundle}"
     for p in query("/v1/profiles", **{"filter[name]": name}):
-        call("DELETE", f"/v1/profiles/{p['id']}")
+        if p["attributes"]["name"] == name:
+            call("DELETE", f"/v1/profiles/{p['id']}")
     profile = call("POST", "/v1/profiles", {"data": {"type": "profiles",
         "attributes": {"name": name, "profileType": "IOS_APP_STORE"},
         "relationships": {"bundleId": {"data": {"type": "bundleIds", "id": ids[0]}},
-                          "certificates": {"data": [{"type": "certificates", "id": c} for c in certs]}}}})
+                          "certificates": {"data": [{"type": "certificates", "id": cert}]}}}})
     content = base64.b64decode(profile["data"]["attributes"]["profileContent"])
     uuid = profile["data"]["attributes"]["uuid"]
     for d in dirs:
