@@ -7,10 +7,18 @@ options:
 settings:
   base:
     SWIFT_VERSION: "5.0"
-    MARKETING_VERSION: "0.1.0"
+    MARKETING_VERSION: "1.0"
     CURRENT_PROJECT_VERSION: "1"
-    DEVELOPMENT_TEAM: ""
+    DEVELOPMENT_TEAM: "${APPLE_TEAM_ID}"
+    # Set to "-nost" to sign without Family Controls (TestFlight before Apple approves distribution).
+    DUMBO_ENT_SUFFIX: ""
+    # "-bare" signs the widgets without the App Group.
+    DUMBO_WIDGETS_ENT_SUFFIX: ""
     CODE_SIGN_STYLE: Automatic
+    # Manual (App Store) signing uses the profiles created by scripts/asc_profiles.py.
+    PROVISIONING_PROFILE_SPECIFIER: "$(DUMBO_PROFILE_$(CODE_SIGN_STYLE))"
+    DUMBO_PROFILE_Automatic: ""
+    DUMBO_PROFILE_Manual: "Dumbo AppStore $(PRODUCT_BUNDLE_IDENTIFIER)"
     TARGETED_DEVICE_FAMILY: "1"
   configs:
     Release:
@@ -32,15 +40,13 @@ targets:
       - package: DumboKit
       - target: DumboWidgets
       - target: DumboMonitor
-    entitlements:
-      path: Dumbo/Dumbo.entitlements
-      properties:
-        com.apple.security.application-groups: [group.com.sarthib7.dumbo]
-        com.apple.developer.family-controls: true
     info:
       path: Dumbo/Info.plist
       properties:
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
         CFBundleDisplayName: Dumbo
+        ITSAppUsesNonExemptEncryption: false
         CFBundleURLTypes:
           - CFBundleURLName: com.sarthib7.dumbo
             CFBundleURLSchemes: [dumbo]
@@ -52,6 +58,8 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.sarthib7.dumbo
+        TARGETED_DEVICE_FAMILY: "1"
+        CODE_SIGN_ENTITLEMENTS: Dumbo/Dumbo$(DUMBO_ENT_SUFFIX).entitlements
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
   DumboWidgets:
@@ -64,19 +72,19 @@ targets:
       - package: DumboKit
       - sdk: WidgetKit.framework
       - sdk: SwiftUI.framework
-    entitlements:
-      path: DumboWidgets/DumboWidgets.entitlements
-      properties:
-        com.apple.security.application-groups: [group.com.sarthib7.dumbo]
     info:
       path: DumboWidgets/Info.plist
       properties:
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
         CFBundleDisplayName: Dumbo
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.sarthib7.dumbo.widgets
+        TARGETED_DEVICE_FAMILY: "1"
+        CODE_SIGN_ENTITLEMENTS: DumboWidgets/DumboWidgets$(DUMBO_WIDGETS_ENT_SUFFIX).entitlements
   DumboMonitor:
     type: app-extension
     platform: iOS
@@ -84,14 +92,11 @@ targets:
       - DumboMonitor
     dependencies:
       - package: DumboKit
-    entitlements:
-      path: DumboMonitor/DumboMonitor.entitlements
-      properties:
-        com.apple.security.application-groups: [group.com.sarthib7.dumbo]
-        com.apple.developer.family-controls: true
     info:
       path: DumboMonitor/Info.plist
       properties:
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
         CFBundleDisplayName: DumboMonitor
         NSExtension:
           NSExtensionPointIdentifier: com.apple.deviceactivity.monitor-extension
@@ -99,6 +104,8 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.sarthib7.dumbo.monitor
+        TARGETED_DEVICE_FAMILY: "1"
+        CODE_SIGN_ENTITLEMENTS: DumboMonitor/DumboMonitor$(DUMBO_ENT_SUFFIX).entitlements
 schemes:
   Dumbo:
     build:

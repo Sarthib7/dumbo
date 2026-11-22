@@ -6,3 +6,4 @@ build/
 .swiftpm/
 Packages/DumboKit/.build/
 build-*/
+build-testflight/

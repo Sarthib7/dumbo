@@ -38,3 +38,14 @@ Screen Time needs a paid Apple Developer account and the Family Controls capabil
 ### Screenshot flags
 
 `-seed YES` loads a sample week. `-screen today|week|settings|gallery|breathe|sip|eyes|nudge-<breathe|sip|eyes|empty>` opens a screen. `-freeze <seconds>` pins exercise animations.
+
+## TestFlight
+
+```sh
+APPLE_TEAM_ID=… ASC_KEY_ID=… ASC_ISSUER_ID=… ASC_KEY_P8="$(cat AuthKey_XXXX.p8)" scripts/testflight.sh
+```
+
+Signs manually with the team's Apple Distribution certificate (must be in the keychain) and App Store profiles that `scripts/asc_profiles.py` creates through the App Store Connect API, then uploads with `altool`. Xcode's automatic signing can't be used with an API key here because Apple doesn't expose App Groups to API keys.
+
+- Default: signed without Family Controls, because TestFlight needs Apple's Family Controls distribution approval. Once that is granted, run with `SCREEN_TIME=1`.
+- `APP_GROUP=0`: also signed without the App Group, for when `group.com.sarthib7.dumbo` isn't linked to the three bundle IDs in the developer portal yet. The app and island work; widgets show no data.
