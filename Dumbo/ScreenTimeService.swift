@@ -52,6 +52,8 @@ final class ScreenTimeService: ObservableObject {
     }
 
     func startMonitoring() {
+        let center = DeviceActivityCenter()
+        center.stopMonitoring([.daily])
         guard hasSelection else { return }
         let events = Dictionary(uniqueKeysWithValues: ScreenTimeEvents.thresholds.map { m in
             (DeviceActivityEvent.Name(ScreenTimeEvents.name(for: m)),
@@ -63,8 +65,6 @@ final class ScreenTimeService: ObservableObject {
         let schedule = DeviceActivitySchedule(intervalStart: DateComponents(hour: 0, minute: 0),
                                               intervalEnd: DateComponents(hour: 23, minute: 59),
                                               repeats: true)
-        let center = DeviceActivityCenter()
-        center.stopMonitoring([.daily])
         do {
             try center.startMonitoring(.daily, during: schedule, events: events)
             lastError = nil
