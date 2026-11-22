@@ -4,7 +4,7 @@
 Usage: asc_profiles.py KEY_PATH BUNDLE_ID [BUNDLE_ID ...]
 Env: ASC_KEY_ID, ASC_ISSUER_ID. Profiles are named "Dumbo AppStore <bundle id>".
 """
-import base64, json, os, plistlib, subprocess, sys, time, urllib.error, urllib.parse, urllib.request
+import base64, hashlib, json, os, plistlib, subprocess, sys, time, urllib.error, urllib.parse, urllib.request
 
 API = "https://api.appstoreconnect.apple.com"
 KEY_PATH = sys.argv[1]
@@ -48,8 +48,14 @@ def query(path, **params):
 certs = query("/v1/certificates", **{"filter[certificateType]": "DISTRIBUTION,IOS_DISTRIBUTION", "limit": 200})
 if not certs:
     sys.exit("No Apple Distribution certificate on the team")
-# App Store profiles take a single certificate; use the newest one (override with DUMBO_CERT_ID).
-cert = os.environ.get("DUMBO_CERT_ID") or max(certs, key=lambda c: c["attributes"]["expirationDate"])["id"]
+# App Store profiles take a single certificate: prefer the newest one whose identity is in the
+# local keychain (override with DUMBO_CERT_ID).
+local = subprocess.run(["security", "find-identity", "-v", "-p", "codesigning"], capture_output=True, text=True).stdout.upper()
+usable = [c for c in certs
+          if hashlib.sha1(base64.b64decode(c["attributes"]["certificateContent"])).hexdigest().upper() in local]
+if not (usable or os.environ.get("DUMBO_CERT_ID")):
+    sys.exit("No Apple Distribution identity from this team is in the keychain")
+cert = os.environ.get("DUMBO_CERT_ID") or max(usable, key=lambda c: c["attributes"]["expirationDate"])["id"]
 
 dirs = [os.path.expanduser(p) for p in ("~/Library/MobileDevice/Provisioning Profiles",
                                          "~/Library/Developer/Xcode/UserData/Provisioning Profiles")]
