@@ -83,6 +83,7 @@ struct IslandGalleryView: View {
         return [
             ("Resting", IslandState(sessionStart: start, energy: 69)),
             ("Breathe", IslandState(sessionStart: start, energy: 58, prompt: .breathe, promptStarted: now, line: "deep breath?")),
+            ("Breathing (in island)", IslandState(sessionStart: start, energy: 58, line: "deep breath?").breathing(step: 2, at: now)),
             ("Sip break", IslandState(sessionStart: start, energy: 52, prompt: .sip, promptStarted: now, line: "sip sip hooray", glasses: 3)),
             ("Eye break", IslandState(sessionStart: start, energy: 45, prompt: .eyes, promptStarted: now, line: "look far away. spot 5 blue things.")),
             ("Out of energy", IslandState(sessionStart: start, energy: 0, prompt: .empty, promptStarted: now, line: "battery's empty. yours, not the phone's.")),

@@ -32,11 +32,11 @@ struct DumboLiveActivity: Widget {
                     .padding(.horizontal, 6)
                 }
             } compactLeading: {
-                IslandGlyph(state: state, size: 20)
+                IslandGlyph(state: state, size: 28)
             } compactTrailing: {
                 IslandValue(state: state)
             } minimal: {
-                IslandGlyph(state: state, size: 18)
+                IslandGlyph(state: state, size: 24)
             }
             .widgetURL(URL(string: "dumbo://\(state.prompt?.rawValue ?? "home")"))
             .keylineTint(Palette.color(for: state.prompt))
@@ -50,8 +50,10 @@ struct IslandAction: View {
     var body: some View {
         if let title = state.actionTitle, let kind = state.prompt {
             let pill = IslandPill(title: title, color: Palette.color(for: kind))
-            if #available(iOS 17.0, *), kind != .breathe {
-                if kind == .sip {
+            if #available(iOS 17.0, *) {
+                if kind == .breathe {
+                    Button(intent: StartBreatheIntent()) { pill }.buttonStyle(.plain)
+                } else if kind == .sip {
                     Button(intent: LogGlassIntent()) { pill }.buttonStyle(.plain)
                 } else {
                     Button(intent: CompletePromptIntent(kind: kind)) { pill }.buttonStyle(.plain)

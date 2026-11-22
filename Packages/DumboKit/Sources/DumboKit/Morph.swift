@@ -246,7 +246,7 @@ public struct MorphGlyph: View {
             let motion = MorphMotion(shape: shape, energy: energy, level: shape == .sip ? (level ?? 0.75) : nil)
             let settle: Double = shape == .breathe ? 4.5 : 0
             let pts = MorphLibrary.points(shape, count: count)
-            let r = max(0.8, s * (count <= 60 ? 0.03 : 0.018))
+            let r = max(0.8, s * (count <= 60 ? 0.04 : 0.018))
             ZStack(alignment: .topLeading) {
                 ForEach(pts.indices, id: \.self) { i in
                     let p = pts[i]

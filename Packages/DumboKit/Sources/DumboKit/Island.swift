@@ -4,6 +4,18 @@ import SwiftUI
 public struct IslandState: Codable, Hashable, Sendable {
     public static let breatheSeconds: TimeInterval = 30
     public static let eyesSeconds: TimeInterval = 20
+    public static let breaths = 3
+    public static let inhaleSeconds: TimeInterval = 4
+    public static let exhaleSeconds: TimeInterval = 6
+
+    /// One half of a breath played inside the island (iOS 17+), so the app never has to open.
+    public struct BreathStep: Codable, Hashable, Sendable {
+        public var index: Int
+        public var start: Date
+        public var end: Date
+        public var inhale: Bool { index % 2 == 0 }
+        public var breathsDone: Int { index / 2 }
+    }
 
     public var sessionStart: Date
     public var energy: Double
@@ -12,9 +24,10 @@ public struct IslandState: Codable, Hashable, Sendable {
     public var line: String
     public var glasses: Int
     public var waterGoal: Int
+    public var breath: BreathStep?
 
     public init(sessionStart: Date, energy: Double, prompt: PromptKind? = nil, promptStarted: Date? = nil,
-                line: String = "", glasses: Int = 0, waterGoal: Int = 8) {
+                line: String = "", glasses: Int = 0, waterGoal: Int = 8, breath: BreathStep? = nil) {
         self.sessionStart = sessionStart
         self.energy = energy
         self.prompt = prompt
@@ -22,6 +35,19 @@ public struct IslandState: Codable, Hashable, Sendable {
         self.line = line
         self.glasses = glasses
         self.waterGoal = waterGoal
+        self.breath = breath
+    }
+
+    public static var breathSteps: Int { breaths * 2 }
+
+    /// The state for step `index` (even = inhale, odd = exhale) of the in-island breathing exercise.
+    public func breathing(step index: Int, at date: Date) -> IslandState {
+        var s = self
+        s.prompt = .breathe
+        s.promptStarted = s.promptStarted ?? date
+        let length = index % 2 == 0 ? Self.inhaleSeconds : Self.exhaleSeconds
+        s.breath = BreathStep(index: index, start: date, end: date.addingTimeInterval(length))
+        return s
     }
 
     public static func make(from data: DumboData, at date: Date, calendar: Calendar = .current) -> IslandState {
@@ -46,12 +72,14 @@ public struct IslandState: Codable, Hashable, Sendable {
         s.prompt = nil
         s.promptStarted = nil
         s.line = ""
+        s.breath = nil
         return s
     }
     var tint: Color { Palette.color(for: prompt) }
 
     public var actionTitle: String? {
-        switch prompt {
+        if breath != nil { return nil }
+        return switch prompt {
         case .breathe: "breathe"
         case .sip: "+ glass"
         case .eyes: "done"
@@ -76,6 +104,8 @@ public struct IslandGlyph: View {
         MorphGlyph(shape: MorphShape(state.prompt), count: size < 30 ? 60 : 120,
                    energy: state.prompt == .empty ? 0 : state.energy,
                    level: max(0.3, Double(state.glasses) / Double(max(1, state.waterGoal))))
+            .scaleEffect(state.breath.map { $0.inhale ? 1.15 : 0.6 } ?? 1)
+            .animation(.easeInOut(duration: 2), value: state.breath?.inhale)
             .frame(width: size, height: size)
     }
 }
@@ -90,6 +120,19 @@ public struct IslandValue: View {
     }
 
     public var body: some View {
+        if let step = state.breath {
+            Text(timerInterval: step.start...step.end)
+                .font(.system(size: large ? 22 : 14, weight: .semibold, design: .rounded))
+                .monospacedDigit()
+                .foregroundStyle(Palette.breath)
+                .multilineTextAlignment(.trailing)
+                .frame(maxWidth: large ? 90 : 52, alignment: .trailing)
+        } else {
+            text
+        }
+    }
+
+    private var text: some View {
         Group {
             switch state.prompt {
             case nil:
@@ -119,7 +162,27 @@ public struct IslandLine: View {
     public init(state: IslandState) { self.state = state }
 
     public var body: some View {
-        if state.prompt == nil {
+        if let step = state.breath {
+            HStack(spacing: 6) {
+                ForEach(0..<IslandState.breaths, id: \.self) { i in
+                    if i == step.breathsDone {
+                        // Fills on the inhale, drains on the exhale.
+                        ProgressView(timerInterval: step.start...step.end, countsDown: !step.inhale) {
+                            EmptyView()
+                        } currentValueLabel: {
+                            EmptyView()
+                        }
+                        .progressViewStyle(.linear)
+                        .tint(Palette.breath)
+                        .frame(width: 44)
+                    } else {
+                        Capsule()
+                            .fill(Palette.breath.opacity(i < step.breathsDone ? 1 : 0.18))
+                            .frame(width: 26, height: 4)
+                    }
+                }
+            }
+        } else if state.prompt == nil {
             HStack(alignment: .firstTextBaseline, spacing: 6) {
                 Text("\(Int(state.energy.rounded()))%")
                     .font(.system(size: 20, weight: .bold, design: .rounded))
@@ -221,7 +284,7 @@ public struct IslandMock<Action: View>: View {
                     .background(RoundedRectangle(cornerRadius: 44, style: .continuous).fill(.black))
             } else {
                 HStack {
-                    IslandGlyph(state: state, size: 20)
+                    IslandGlyph(state: state, size: 28)
                     Spacer(minLength: 90)
                     IslandValue(state: state)
                 }
