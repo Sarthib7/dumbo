@@ -5,3 +5,4 @@ build/
 .build/
 .swiftpm/
 Packages/DumboKit/.build/
+build-*/
