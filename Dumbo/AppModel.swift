@@ -135,6 +135,8 @@ final class AppModel: ObservableObject {
     private func tick() {
         now = Date()
         guard settings.demo else {
+            // The monitor extension writes from another process, so pick up its changes here.
+            reload()
             if data.activePrompt != nil, now.timeIntervalSince(data.activePrompt!.started) > DumboEngine.promptTimeout {
                 mutate { DumboEngine.expirePrompt(at: .now, in: &$0) }
             }
