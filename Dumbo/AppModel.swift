@@ -119,14 +119,21 @@ final class AppModel: ObservableObject {
     }
 
     func loadSampleWeek() {
-        let sample = SampleData.make(now: .now, settings: settings)
-        mutate { $0 = sample }
+        var sample = SampleData.make(now: .now, settings: settings)
+        mutate { data in
+            sample.cursor = data.cursor
+            data = sample
+        }
     }
 
     func resetAll() {
         var fresh = DumboData()
         fresh.settings = settings
-        mutate { $0 = fresh }
+        // Screen Time thresholds are cumulative per day, so keep the cursor to avoid recounting cleared minutes.
+        mutate { data in
+            fresh.cursor = data.cursor
+            data = fresh
+        }
     }
 
     // MARK: Demo
