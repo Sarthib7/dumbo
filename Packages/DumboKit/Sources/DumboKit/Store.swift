@@ -26,11 +26,12 @@ public final class DumboStore: @unchecked Sendable {
             let local = fm.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
             let base = fm.containerURL(forSecurityApplicationGroupIdentifier: Self.appGroup) ?? local
             try? fm.createDirectory(at: base, withIntermediateDirectories: true)
-            self.url = base.appendingPathComponent("dumbo.json")
+            let file = base.appendingPathComponent("dumbo.json")
+            self.url = file
             // Builds signed without the App Group save locally; carry that data over once the group exists.
             let localFile = local.appendingPathComponent("dumbo.json")
-            if base != local, !fm.fileExists(atPath: url.path), fm.fileExists(atPath: localFile.path) {
-                try? fm.moveItem(at: localFile, to: url)
+            if base != local, !fm.fileExists(atPath: file.path), fm.fileExists(atPath: localFile.path) {
+                try? fm.moveItem(at: localFile, to: file)
             }
         }
     }
