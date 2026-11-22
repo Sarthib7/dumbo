@@ -50,7 +50,7 @@ struct SettingsView: View {
                 }
 
                 Section {
-                    Toggle("Demo mode (1 s = 1 min)", isOn: binding(\.demo))
+                    Toggle("Demo mode (2 s = 1 min)", isOn: binding(\.demo))
                     Button("Load a sample week") { model.loadSampleWeek() }
                     Button("Reset all data", role: .destructive) { model.resetAll() }
                 } header: { Text("Demo") } footer: { Text("Everything stays on this iPhone. Dumbo has no account and no server.") }
@@ -83,7 +83,7 @@ struct IslandGalleryView: View {
         return [
             ("Resting", IslandState(sessionStart: start, energy: 69)),
             ("Breathe", IslandState(sessionStart: start, energy: 58, prompt: .breathe, promptStarted: now, line: "deep breath?")),
-            ("Breathing (in island)", IslandState(sessionStart: start, energy: 58, line: "deep breath?").breathing(step: 2, at: now)),
+            ("Breathing (in island)", IslandState(sessionStart: start, energy: 58).breathing(start: now.addingTimeInterval(-12), step: 2)),
             ("Sip break", IslandState(sessionStart: start, energy: 52, prompt: .sip, promptStarted: now, line: "sip sip hooray", glasses: 3)),
             ("Eye break", IslandState(sessionStart: start, energy: 45, prompt: .eyes, promptStarted: now, line: "look far away. spot 5 blue things.")),
             ("Out of energy", IslandState(sessionStart: start, energy: 0, prompt: .empty, promptStarted: now, line: "battery's empty. yours, not the phone's.")),

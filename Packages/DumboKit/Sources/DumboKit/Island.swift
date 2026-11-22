@@ -8,13 +8,17 @@ public struct IslandState: Codable, Hashable, Sendable {
     public static let inhaleSeconds: TimeInterval = 4
     public static let exhaleSeconds: TimeInterval = 6
 
-    /// One half of a breath played inside the island (iOS 17+), so the app never has to open.
+    /// The breathing exercise played inside the island (iOS 17+), so the app never has to open.
+    /// The bars run on system timers, so they keep moving even if no further update arrives.
     public struct BreathStep: Codable, Hashable, Sendable {
-        public var index: Int
         public var start: Date
-        public var end: Date
+        public var index: Int
         public var inhale: Bool { index % 2 == 0 }
-        public var breathsDone: Int { index / 2 }
+        public var end: Date { start.addingTimeInterval(IslandState.breathTotal) }
+        public func phase(_ i: Int) -> ClosedRange<Date> {
+            let from = start.addingTimeInterval(IslandState.breathOffset(i))
+            return from...from.addingTimeInterval(i % 2 == 0 ? IslandState.inhaleSeconds : IslandState.exhaleSeconds)
+        }
     }
 
     public var sessionStart: Date
@@ -40,13 +44,18 @@ public struct IslandState: Codable, Hashable, Sendable {
 
     public static var breathSteps: Int { breaths * 2 }
 
-    /// The state for step `index` (even = inhale, odd = exhale) of the in-island breathing exercise.
-    public func breathing(step index: Int, at date: Date) -> IslandState {
+    public static var breathTotal: TimeInterval { Double(breaths) * (inhaleSeconds + exhaleSeconds) }
+
+    /// Seconds from the start of the exercise to half-breath `step` (even = inhale, odd = exhale).
+    public static func breathOffset(_ step: Int) -> TimeInterval {
+        Double(step / 2) * (inhaleSeconds + exhaleSeconds) + (step % 2 == 1 ? inhaleSeconds : 0)
+    }
+
+    public func breathing(start: Date, step index: Int) -> IslandState {
         var s = self
         s.prompt = .breathe
-        s.promptStarted = s.promptStarted ?? date
-        let length = index % 2 == 0 ? Self.inhaleSeconds : Self.exhaleSeconds
-        s.breath = BreathStep(index: index, start: date, end: date.addingTimeInterval(length))
+        s.promptStarted = start
+        s.breath = BreathStep(start: start, index: index)
         return s
     }
 
@@ -104,7 +113,7 @@ public struct IslandGlyph: View {
         MorphGlyph(shape: MorphShape(state.prompt), count: size < 30 ? 60 : 120,
                    energy: state.prompt == .empty ? 0 : state.energy,
                    level: max(0.3, Double(state.glasses) / Double(max(1, state.waterGoal))))
-            .scaleEffect(state.breath.map { $0.inhale ? 1.15 : 0.6 } ?? 1)
+            .scaleEffect(state.breath.map { $0.inhale ? 1.25 : 0.55 } ?? 1)
             .animation(.easeInOut(duration: 2), value: state.breath?.inhale)
             .frame(width: size, height: size)
     }
@@ -163,22 +172,12 @@ public struct IslandLine: View {
 
     public var body: some View {
         if let step = state.breath {
-            HStack(spacing: 6) {
+            // One pair per breath: a bright bar fills on the inhale, a dim one on the exhale.
+            HStack(spacing: 10) {
                 ForEach(0..<IslandState.breaths, id: \.self) { i in
-                    if i == step.breathsDone {
-                        // Fills on the inhale, drains on the exhale.
-                        ProgressView(timerInterval: step.start...step.end, countsDown: !step.inhale) {
-                            EmptyView()
-                        } currentValueLabel: {
-                            EmptyView()
-                        }
-                        .progressViewStyle(.linear)
-                        .tint(Palette.breath)
-                        .frame(width: 44)
-                    } else {
-                        Capsule()
-                            .fill(Palette.breath.opacity(i < step.breathsDone ? 1 : 0.18))
-                            .frame(width: 26, height: 4)
+                    HStack(spacing: 3) {
+                        bar(step.phase(i * 2), opacity: 1).frame(width: 22)
+                        bar(step.phase(i * 2 + 1), opacity: 0.45).frame(width: 30)
                     }
                 }
             }
@@ -198,6 +197,16 @@ public struct IslandLine: View {
                 .fixedSize(horizontal: false, vertical: true)
         }
     }
+}
+
+private func bar(_ interval: ClosedRange<Date>, opacity: Double) -> some View {
+    ProgressView(timerInterval: interval, countsDown: false) {
+        EmptyView()
+    } currentValueLabel: {
+        EmptyView()
+    }
+    .progressViewStyle(.linear)
+    .tint(Palette.breath.opacity(opacity))
 }
 
 public struct IslandPill: View {

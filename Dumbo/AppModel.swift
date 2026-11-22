@@ -75,12 +75,12 @@ final class AppModel: ObservableObject {
         if settings.demo != wasDemo { scheduleTicker() }
     }
 
-    /// Ticks once a second only in demo mode, every 30 s otherwise, and not at all in the background.
+    /// Ticks every 2 s only in demo mode, every 30 s otherwise, and not at all in the background.
     private func scheduleTicker() {
         ticker?.invalidate()
         ticker = nil
         guard isActive else { return }
-        let t = Timer(timeInterval: settings.demo ? 1 : 30, repeats: true) { [weak self] _ in
+        let t = Timer(timeInterval: settings.demo ? 2 : 30, repeats: true) { [weak self] _ in
             Task { @MainActor in self?.tick() }
         }
         t.tolerance = settings.demo ? 0.1 : 5
@@ -138,7 +138,7 @@ final class AppModel: ObservableObject {
 
     // MARK: Demo
 
-    /// In demo mode every real second counts as one minute of screen use.
+    /// In demo mode every tick (2 s) counts as one minute of screen use.
     private func tick() {
         now = Date()
         guard settings.demo else {

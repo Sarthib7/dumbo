@@ -328,15 +328,15 @@
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					19650701258147C05522544C = {
-						DevelopmentTeam = "${APPLE_TEAM_ID}";
+						DevelopmentTeam = RVHT8L35VM;
 						ProvisioningStyle = Automatic;
 					};
 					687C28F6E385156F48A2A385 = {
-						DevelopmentTeam = "${APPLE_TEAM_ID}";
+						DevelopmentTeam = RVHT8L35VM;
 						ProvisioningStyle = Automatic;
 					};
 					7FDC01E5BEF9D256B75EE707 = {
-						DevelopmentTeam = "${APPLE_TEAM_ID}";
+						DevelopmentTeam = RVHT8L35VM;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -472,10 +472,11 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "${APPLE_TEAM_ID}";
+				DEVELOPMENT_TEAM = RVHT8L35VM;
 				DUMBO_ENT_SUFFIX = "";
 				DUMBO_PROFILE_Automatic = "";
 				DUMBO_PROFILE_Manual = "Dumbo AppStore $(PRODUCT_BUNDLE_IDENTIFIER)";
+				DUMBO_SCREEN_TIME = YES;
 				DUMBO_WIDGETS_ENT_SUFFIX = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -539,10 +540,11 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "${APPLE_TEAM_ID}";
+				DEVELOPMENT_TEAM = RVHT8L35VM;
 				DUMBO_ENT_SUFFIX = "";
 				DUMBO_PROFILE_Automatic = "";
 				DUMBO_PROFILE_Manual = "Dumbo AppStore $(PRODUCT_BUNDLE_IDENTIFIER)";
+				DUMBO_SCREEN_TIME = YES;
 				DUMBO_WIDGETS_ENT_SUFFIX = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;

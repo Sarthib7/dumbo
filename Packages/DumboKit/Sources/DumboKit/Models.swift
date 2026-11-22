@@ -4,7 +4,8 @@ public enum PromptKind: String, Codable, CaseIterable, Hashable, Sendable {
     case breathe, sip, eyes, empty
 
     /// Order used when rotating nudges during a session.
-    public static let rotation: [PromptKind] = [.eyes, .breathe, .sip]
+    /// Breathing comes up twice as often as eyes or water.
+    public static let rotation: [PromptKind] = [.breathe, .eyes, .breathe, .sip]
 }
 
 public enum Mode: String, Codable, CaseIterable, Identifiable, Sendable {

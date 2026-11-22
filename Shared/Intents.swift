@@ -33,24 +33,24 @@ struct CompletePromptIntent: LiveActivityIntent {
     }
 }
 
-/// Plays the breathing exercise inside the island: one update per inhale/exhale, then credits the break.
+/// Plays the breathing exercise inside the island. The break is credited up front and the bars run on
+/// system timers, so the island keeps animating even if iOS suspends this intent; per-step updates only
+/// add the swelling/shrinking glyph.
 @available(iOS 17.0, *)
 struct StartBreatheIntent: LiveActivityIntent {
     static var title: LocalizedStringResource = "Breathe in the island"
 
     func perform() async throws -> some IntentResult {
         let start = Date.now
-        let total = Double(IslandState.breaths) * (IslandState.inhaleSeconds + IslandState.exhaleSeconds)
-        var state = IslandState.make(from: DumboStore.shared.load(), at: start)
+        let data = DumboStore.shared.update { DumboEngine.complete(.breathe, at: start, in: &$0) }
+        let base = IslandState.make(from: data, at: start)
+        let end = start.addingTimeInterval(IslandState.breathTotal)
         for step in 0..<IslandState.breathSteps {
-            state = state.breathing(step: step, at: .now)
-            // If iOS stops this intent early, the island falls back to resting on its own.
-            await IslandController.show(state, staleDate: start.addingTimeInterval(total + 3))
-            guard let end = state.breath?.end,
-                  (try? await Task.sleep(for: .seconds(end.timeIntervalSinceNow))) != nil else { return .result() }
+            await IslandController.show(base.breathing(start: start, step: step), staleDate: end)
+            let next = start.addingTimeInterval(IslandState.breathOffset(step + 1))
+            guard (try? await Task.sleep(for: .seconds(max(0, next.timeIntervalSinceNow)))) != nil else { break }
         }
-        let data = DumboStore.shared.update { DumboEngine.complete(.breathe, at: .now, in: &$0) }
-        await IslandController.sync(data: data)
+        await IslandController.sync(data: DumboStore.shared.load())
         return .result()
     }
 }
