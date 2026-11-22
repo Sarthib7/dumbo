@@ -38,3 +38,11 @@ Screen Time needs a paid Apple Developer account and the Family Controls capabil
 ### Screenshot flags
 
 `-seed YES` loads a sample week. `-screen today|week|settings|gallery|breathe|sip|eyes|nudge-<breathe|sip|eyes|empty>` opens a screen. `-freeze <seconds>` pins exercise animations.
+
+## TestFlight
+
+```sh
+APPLE_TEAM_ID=… ASC_KEY_ID=… ASC_ISSUER_ID=… ASC_KEY_P8="$(cat AuthKey_XXXX.p8)" scripts/testflight.sh
+```
+
+Uses an App Store Connect API key (Admin) for automatic signing and uploads the build. By default the build is signed without Family Controls, because TestFlight needs Apple's Family Controls distribution approval. Once that is granted, run with `SCREEN_TIME=1`.
