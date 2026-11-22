@@ -132,6 +132,17 @@ final class SummaryTests: XCTestCase {
         XCTAssertEqual(s.breaths, 1)
     }
 
+    func testSessionAcrossMidnightIsSplitBetweenDays() {
+        var d = DumboData()
+        for m in 41...59 { DumboEngine.recordUse(at: date(21, 23, m), in: &d) }
+        for m in 0...20 { DumboEngine.recordUse(at: date(22, 0, m), in: &d) }
+        XCTAssertEqual(d.sessions.count, 1)
+        let yesterday = Summarizer.day(date(21, 12), data: d, calendar: cal)
+        let today = Summarizer.day(date(22, 12), data: d, calendar: cal)
+        XCTAssertEqual(yesterday.screenMinutes + today.screenMinutes, 40)
+        XCTAssertEqual(today.screenMinutes, 20, accuracy: 1)
+    }
+
     func testWeekSummaryComparesToLastWeek() {
         var d = DumboData()
         for m in 1...60 { DumboEngine.recordUse(at: date(10, 21, m % 60 == 0 ? 59 : m), in: &d) }

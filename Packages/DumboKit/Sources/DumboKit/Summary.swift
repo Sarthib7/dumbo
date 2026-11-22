@@ -45,16 +45,17 @@ public enum Summarizer {
         let start = calendar.startOfDay(for: date)
         let end = calendar.date(byAdding: .day, value: 1, to: start)!
         let range = start..<end
-        let sessions = data.sessions.filter { range.contains($0.start) }
+        let sessions = data.sessions.filter { minutes(of: $0, in: range) > 0 || range.contains($0.start) }
         let prompts = data.prompts.filter { range.contains($0.date) }
         let done = prompts.filter { $0.outcome == .done }
-        let minutes = sessions.reduce(0) { $0 + $1.minutes }
+        let perSession = sessions.map { minutes(of: $0, in: range) }
+        let total = perSession.reduce(0, +)
         let avg = sessions.isEmpty ? 100 : sessions.reduce(0) { $0 + $1.minEnergy } / Double(sessions.count)
         return DaySummary(
             date: start,
             sessions: sessions,
-            screenMinutes: minutes,
-            longestMinutes: sessions.map(\.minutes).max() ?? 0,
+            screenMinutes: total,
+            longestMinutes: perSession.max() ?? 0,
             averageEnergy: avg,
             promptsShown: prompts.filter { $0.kind != .empty }.count,
             promptsDone: done.filter { $0.kind != .empty }.count,
@@ -89,6 +90,14 @@ public enum Summarizer {
             heatmap: heat,
             insight: insight(days: days, heat: heat, calendar: calendar)
         )
+    }
+
+    /// Minutes of `session` that fall inside `range`, spread evenly over the session's span.
+    static func minutes(of session: Session, in range: Range<Date>) -> Int {
+        let span = session.lastActivity.timeIntervalSince(session.start)
+        guard span > 0 else { return range.contains(session.start) ? session.minutes : 0 }
+        let overlap = min(session.lastActivity, range.upperBound).timeIntervalSince(max(session.start, range.lowerBound))
+        return overlap <= 0 ? 0 : Int((Double(session.minutes) * overlap / span).rounded())
     }
 
     static func bucket(for date: Date, calendar: Calendar) -> Int {
