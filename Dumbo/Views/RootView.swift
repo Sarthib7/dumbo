@@ -22,7 +22,7 @@ struct RootView: View {
         .statusBarHidden(model.data.activePrompt != nil && model.exercise == nil)
         .fullScreenCover(item: $model.exercise) { kind in ExerciseView(kind: kind) }
         .sheet(isPresented: $model.showGallery) { IslandGalleryView() }
-        .onChange(of: phase) { _, p in if p == .active { model.becameActive() } }
+        .onChangeOf(phase) { model.setActive($0 == .active) }
         .onOpenURL { model.open($0) }
     }
 }
@@ -50,6 +50,18 @@ struct NudgeOverlay: View {
         .padding(.top, 10)
         .ignoresSafeArea()
         .animation(.spring(response: 0.45, dampingFraction: 0.78), value: model.data.activePrompt)
+    }
+}
+
+extension View {
+    /// `onChange` that works on iOS 16 and 17+.
+    @ViewBuilder
+    func onChangeOf<V: Equatable>(_ value: V, perform: @escaping (V) -> Void) -> some View {
+        if #available(iOS 17, *) {
+            onChange(of: value) { _, new in perform(new) }
+        } else {
+            onChange(of: value, perform: perform)
+        }
     }
 }
 

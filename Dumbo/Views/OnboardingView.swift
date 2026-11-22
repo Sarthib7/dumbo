@@ -25,7 +25,7 @@ struct OnboardingView: View {
         }
         .background(Color.black)
         .familyActivityPicker(isPresented: $picking, selection: $selection)
-        .onChange(of: picking) { _, open in
+        .onChangeOf(picking) { open in
             if !open {
                 screenTime.save(selection)
                 finish(demo: false)

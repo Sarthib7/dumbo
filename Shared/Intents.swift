@@ -3,6 +3,7 @@ import DumboKit
 import Foundation
 
 /// Island buttons. LiveActivityIntents run in the app's process, offline.
+@available(iOS 17.0, *)
 struct LogGlassIntent: LiveActivityIntent {
     static var title: LocalizedStringResource = "Log a glass of water"
 
@@ -13,6 +14,7 @@ struct LogGlassIntent: LiveActivityIntent {
     }
 }
 
+@available(iOS 17.0, *)
 struct CompletePromptIntent: LiveActivityIntent {
     static var title: LocalizedStringResource = "Finish break"
 

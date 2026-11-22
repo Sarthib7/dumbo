@@ -18,9 +18,7 @@ final class AppModel: ObservableObject {
     init() {
         data = store.load()
         applyLaunchArguments()
-        ticker = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
-            Task { @MainActor in self?.tick() }
-        }
+        scheduleTicker()
         NotificationCenter.default.addObserver(forName: DumboStore.didChange, object: nil, queue: .main) { [weak self] _ in
             Task { @MainActor in self?.reload() }
         }
@@ -72,12 +70,37 @@ final class AppModel: ObservableObject {
     }
 
     func update(_ change: (inout Settings) -> Void) {
+        let wasDemo = settings.demo
         mutate { change(&$0.settings) }
+        if settings.demo != wasDemo { scheduleTicker() }
+    }
+
+    /// Ticks once a second only in demo mode, every 30 s otherwise, and not at all in the background.
+    private func scheduleTicker() {
+        ticker?.invalidate()
+        ticker = nil
+        guard isActive else { return }
+        let t = Timer(timeInterval: settings.demo ? 1 : 30, repeats: true) { [weak self] _ in
+            Task { @MainActor in self?.tick() }
+        }
+        t.tolerance = settings.demo ? 0.1 : 5
+        RunLoop.main.add(t, forMode: .common)
+        ticker = t
+    }
+
+    private var isActive = true
+
+    func setActive(_ active: Bool) {
+        isActive = active
+        scheduleTicker()
+        if active { becameActive() }
     }
 
     func becameActive() {
         reload()
+        now = Date()
         guard settings.onboarded else { return }
+        data = store.update { DumboEngine.trim(at: .now, in: &$0) }
         IslandController.start(data: data)
         let snapshot = data
         Task { await IslandController.sync(data: snapshot) }

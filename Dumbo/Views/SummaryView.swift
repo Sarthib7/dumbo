@@ -64,8 +64,8 @@ struct TodayView: View {
                     VStack(alignment: .leading, spacing: 3) {
                         Caption("screen-on")
                         Text(formatMinutes(day.screenMinutes)).font(.system(size: 30, weight: .bold, design: .rounded))
-                        (Text("avg session energy ").foregroundStyle(Palette.muted)
-                         + Text("\(Int(day.averageEnergy))%").foregroundStyle(Palette.ember2).bold())
+                        (Text("avg session energy ").foregroundColor(Palette.muted)
+                         + Text("\(Int(day.averageEnergy))%").foregroundColor(Palette.ember2).bold())
                             .font(.footnote)
                     }
                 }
@@ -78,9 +78,9 @@ struct TodayView: View {
                 }
                 .font(.system(size: 10)).foregroundStyle(Color(white: 0.4))
                 HStack {
-                    (Text("longest ") + Text(formatMinutes(day.longestMinutes)).bold().foregroundStyle(.white))
+                    (Text("longest ") + Text(formatMinutes(day.longestMinutes)).bold().foregroundColor(.white))
                     Spacer()
-                    (Text("breaks ") + Text("\(day.promptsDone)/\(day.promptsShown)").bold().foregroundStyle(.white))
+                    (Text("breaks ") + Text("\(day.promptsDone)/\(day.promptsShown)").bold().foregroundColor(.white))
                 }
                 .font(.footnote).foregroundStyle(Palette.muted).padding(.top, 2)
             }

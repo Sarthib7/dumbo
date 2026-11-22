@@ -49,13 +49,15 @@ struct IslandAction: View {
     var body: some View {
         if let title = state.actionTitle, let kind = state.prompt {
             let pill = IslandPill(title: title, color: Palette.color(for: kind))
-            switch kind {
-            case .breathe:
-                Link(destination: URL(string: "dumbo://breathe")!) { pill }
-            case .sip:
-                Button(intent: LogGlassIntent()) { pill }.buttonStyle(.plain)
-            case .eyes, .empty:
-                Button(intent: CompletePromptIntent(kind: kind)) { pill }.buttonStyle(.plain)
+            if #available(iOS 17.0, *), kind != .breathe {
+                if kind == .sip {
+                    Button(intent: LogGlassIntent()) { pill }.buttonStyle(.plain)
+                } else {
+                    Button(intent: CompletePromptIntent(kind: kind)) { pill }.buttonStyle(.plain)
+                }
+            } else {
+                // iOS 16 has no buttons in Live Activities, so the pill opens the app instead.
+                Link(destination: URL(string: "dumbo://\(kind == .empty ? "breathe" : kind.rawValue)")!) { pill }
             }
         }
     }

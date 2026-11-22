@@ -54,7 +54,7 @@ struct SettingsView: View {
             }
             .navigationTitle("Settings")
             .familyActivityPicker(isPresented: $picking, selection: $pickerSelection)
-            .onChange(of: picking) { _, open in if !open { screenTime.save(pickerSelection) } }
+            .onChangeOf(picking) { open in if !open { screenTime.save(pickerSelection) } }
         }
     }
 

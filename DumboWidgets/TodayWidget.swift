@@ -31,7 +31,7 @@ struct TodayWidget: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: "DumboToday", provider: TodayProvider()) { entry in
             TodayWidgetView(entry: entry)
-                .containerBackground(Color(white: 0.067), for: .widget)
+                .widgetBackground(Color(white: 0.067))
         }
         .configurationDisplayName("Today")
         .description("Screen-on time, water, breaths and eye breaks.")
@@ -95,6 +95,17 @@ struct TodayWidgetView: View {
         }
         .font(.system(size: 11, weight: .semibold))
         .labelStyle(CompactLabel())
+    }
+}
+
+extension View {
+    @ViewBuilder
+    func widgetBackground(_ color: Color) -> some View {
+        if #available(iOS 17.0, *) {
+            containerBackground(color, for: .widget)
+        } else {
+            padding().background(color)
+        }
     }
 }
 

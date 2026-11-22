@@ -3,7 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "DumboKit",
-    platforms: [.iOS(.v17), .macOS(.v14)],
+    platforms: [.iOS("16.2"), .macOS(.v13)],
     products: [.library(name: "DumboKit", targets: ["DumboKit"])],
     targets: [
         .target(name: "DumboKit"),
