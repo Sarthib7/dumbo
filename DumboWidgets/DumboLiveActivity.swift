@@ -27,7 +27,7 @@ struct DumboLiveActivity: Widget {
                             Spacer(minLength: 4)
                             IslandAction(state: state)
                         }
-                        if state.prompt == nil { EnergyBar(energy: state.energy) }
+                        if state.prompt == nil { LiveEnergyBar(state: state) }
                     }
                     .padding(.horizontal, 6)
                 }

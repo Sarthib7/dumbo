@@ -29,6 +29,11 @@ public struct IslandState: Codable, Hashable, Sendable {
     public var glasses: Int
     public var waterGoal: Int
     public var breath: BreathStep?
+    /// Screen-on minutes today, for the expanded island.
+    public var todayMinutes: Int?
+    /// When energy hits 0 if the screen stays on, and how long a full drain takes; lets the bar drain live.
+    public var energyEmpty: Date?
+    public var drainSeconds: Double?
 
     public init(sessionStart: Date, energy: Double, prompt: PromptKind? = nil, promptStarted: Date? = nil,
                 line: String = "", glasses: Int = 0, waterGoal: Int = 8, breath: BreathStep? = nil) {
@@ -62,15 +67,22 @@ public struct IslandState: Codable, Hashable, Sendable {
     public static func make(from data: DumboData, at date: Date, calendar: Calendar = .current) -> IslandState {
         let session = DumboEngine.currentSession(at: date, in: data)
         let today = calendar.startOfDay(for: date)
-        return IslandState(
-            sessionStart: session?.start ?? date,
-            energy: session?.energy ?? 100,
+        let energy = session?.energy ?? 100
+        let drain = data.settings.mode.drainMinutes * (data.settings.demo ? 2 : 60)
+        var state = IslandState(
+            // Screen-on time, not wall-clock time since the session began; the island ticks it live from here.
+            sessionStart: date.addingTimeInterval(-60 * Double(session?.minutes ?? 0)),
+            energy: energy,
             prompt: data.activePrompt?.kind,
             promptStarted: data.activePrompt?.started,
             line: data.activePrompt?.line ?? "",
             glasses: data.water.filter { $0 >= today }.count,
             waterGoal: data.settings.waterGoal
         )
+        state.todayMinutes = Summarizer.day(date, data: data, calendar: calendar).screenMinutes
+        state.drainSeconds = drain
+        state.energyEmpty = date.addingTimeInterval(energy / 100 * drain)
+        return state
     }
 
     var promptStart: Date { promptStarted ?? sessionStart }
@@ -145,7 +157,7 @@ public struct IslandValue: View {
         Group {
             switch state.prompt {
             case nil:
-                Text(timerInterval: state.sessionStart...state.sessionStart.addingTimeInterval(86_400), countsDown: false)
+                Text(state.sessionStart, style: .timer)
                     .foregroundStyle(Palette.ember)
             case .breathe:
                 Text(timerInterval: state.promptStart...state.promptStart.addingTimeInterval(IslandState.breatheSeconds))
@@ -180,6 +192,13 @@ public struct IslandLine: View {
                         bar(step.phase(i * 2 + 1), opacity: 0.45).frame(width: 30)
                     }
                 }
+            }
+        } else if state.prompt == nil, let today = state.todayMinutes {
+            HStack(alignment: .firstTextBaseline, spacing: 6) {
+                Text("today").font(.system(size: 13)).foregroundStyle(Palette.muted)
+                Text(formatMinutes(today))
+                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .foregroundStyle(Palette.ember)
             }
         } else if state.prompt == nil {
             HStack(alignment: .firstTextBaseline, spacing: 6) {
@@ -243,6 +262,25 @@ public struct EnergyBar: View {
     }
 }
 
+/// Drains in real time from the last update (system timer), so the island moves without the app.
+public struct LiveEnergyBar: View {
+    let state: IslandState
+    public init(state: IslandState) { self.state = state }
+    public var body: some View {
+        if let end = state.energyEmpty, let drain = state.drainSeconds, drain > 0 {
+            ProgressView(timerInterval: end.addingTimeInterval(-drain)...end, countsDown: true) {
+                EmptyView()
+            } currentValueLabel: {
+                EmptyView()
+            }
+            .progressViewStyle(.linear)
+            .tint(Palette.ember)
+        } else {
+            EnergyBar(energy: state.energy)
+        }
+    }
+}
+
 /// Expanded layout: glyph and value on top, line and one action below.
 public struct IslandExpanded<Action: View>: View {
     let state: IslandState
@@ -265,7 +303,7 @@ public struct IslandExpanded<Action: View>: View {
                 Spacer(minLength: 4)
                 action
             }
-            if state.prompt == nil { EnergyBar(energy: state.energy) }
+            if state.prompt == nil { LiveEnergyBar(state: state) }
         }
     }
 }
