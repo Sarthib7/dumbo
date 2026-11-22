@@ -6,12 +6,13 @@ import WidgetKit
 struct DumboLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: DumboActivityAttributes.self) { context in
-            IslandExpanded(state: context.state) { IslandAction(state: context.state) }
+            let state = context.isStale ? context.state.resting : context.state
+            IslandExpanded(state: state) { IslandAction(state: state) }
                 .padding(18)
                 .activityBackgroundTint(.black)
                 .activitySystemActionForegroundColor(.white)
         } dynamicIsland: { context in
-            let state = context.state
+            let state = context.isStale ? context.state.resting : context.state
             return DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
                     IslandGlyph(state: state, size: 40).padding(.leading, 6)

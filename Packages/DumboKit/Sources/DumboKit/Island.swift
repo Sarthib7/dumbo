@@ -39,6 +39,15 @@ public struct IslandState: Codable, Hashable, Sendable {
     }
 
     var promptStart: Date { promptStarted ?? sessionStart }
+
+    /// The same state with the nudge removed, shown once a nudge goes stale.
+    public var resting: IslandState {
+        var s = self
+        s.prompt = nil
+        s.promptStarted = nil
+        s.line = ""
+        return s
+    }
     var tint: Color { Palette.color(for: prompt) }
 
     public var actionTitle: String? {

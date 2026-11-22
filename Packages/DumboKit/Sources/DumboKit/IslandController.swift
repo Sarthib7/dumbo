@@ -23,7 +23,9 @@ public enum IslandController {
     /// Pushes the latest state. With `alert`, the island expands briefly; the sound is silent.
     public static func sync(data: DumboData, at date: Date = .now, alert: Bool = false) async {
         let state = IslandState.make(from: data, at: date)
-        let content = ActivityContent(state: state, staleDate: nil)
+        // A stale nudge collapses back to the resting island even if no further update arrives.
+        let stale = state.promptStarted.map { $0.addingTimeInterval(DumboEngine.promptTimeout) }
+        let content = ActivityContent(state: state, staleDate: stale)
         let config = alert && state.prompt != nil
             ? AlertConfiguration(title: "\(LineDeck.compact(state.prompt!))", body: "\(state.line)", sound: .named("silence.caf"))
             : nil
