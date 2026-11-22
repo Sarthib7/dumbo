@@ -75,8 +75,12 @@ public enum Summarizer {
             glasses: data.water.filter { range.contains($0) }.count,
             breaths: done.filter { $0.kind == .breathe }.count,
             eyeBreaks: done.filter { $0.kind == .eyes }.count,
-            breakdown: sessions.reversed().map { s in
-                let span = s.start...s.lastActivity.addingTimeInterval(DumboEngine.newSessionGap)
+            breakdown: sessions.indices.reversed().map { i in
+                let s = sessions[i]
+                // A session owns habits until the gap runs out or the next session starts, within this day.
+                var end = s.lastActivity.addingTimeInterval(DumboEngine.newSessionGap)
+                if i + 1 < sessions.count { end = min(end, sessions[i + 1].start) }
+                let span = max(s.start, start)..<max(max(s.start, start), min(end, range.upperBound))
                 let doneHere = done.filter { span.contains($0.date) }
                 return SessionStats(id: s.id, start: s.start, minutes: minutes(of: s, in: range), minEnergy: s.minEnergy,
                                     glasses: data.water.filter { span.contains($0) }.count,
