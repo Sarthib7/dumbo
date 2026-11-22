@@ -38,7 +38,6 @@ public struct Settings: Codable, Equatable, Sendable {
     public var dailyGoalMinutes: Int = 180
     public var promptEveryMinutes: Int = 10
     public var onboarded: Bool = false
-    public var demo: Bool = false
     public var style: ParticleStyle = .dots
 
     public init() {}
@@ -53,7 +52,6 @@ public struct Settings: Codable, Equatable, Sendable {
         dailyGoalMinutes = try c.decodeIfPresent(Int.self, forKey: .dailyGoalMinutes) ?? d.dailyGoalMinutes
         promptEveryMinutes = try c.decodeIfPresent(Int.self, forKey: .promptEveryMinutes) ?? d.promptEveryMinutes
         onboarded = try c.decodeIfPresent(Bool.self, forKey: .onboarded) ?? d.onboarded
-        demo = try c.decodeIfPresent(Bool.self, forKey: .demo) ?? d.demo
         style = try c.decodeIfPresent(ParticleStyle.self, forKey: .style) ?? d.style
     }
 }

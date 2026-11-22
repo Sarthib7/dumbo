@@ -11,10 +11,6 @@ struct HomeView: View {
                     LogoMark().frame(width: 26, height: 26)
                     Text("dumbo").font(.system(size: 22, weight: .bold, design: .rounded))
                     Spacer()
-                    if model.settings.demo {
-                        Text("DEMO · 2 s = 1 min").font(.system(size: 10, weight: .bold)).foregroundStyle(.black)
-                            .padding(.horizontal, 8).padding(.vertical, 3).background(Capsule().fill(Palette.ember))
-                    }
                 }
 
                 VStack(spacing: 6) {

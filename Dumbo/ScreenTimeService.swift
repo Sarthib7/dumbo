@@ -40,7 +40,7 @@ final class ScreenTimeService: ObservableObject {
 
     func requestAuthorization() async {
         guard Self.available else {
-            lastError = "Screen Time is waiting on Apple's approval for this build. Use demo mode for now."
+            lastError = "Screen Time is waiting on Apple's approval for this build. Breaks and water logging still work meanwhile."
             return
         }
         do {

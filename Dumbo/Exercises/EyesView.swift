@@ -12,7 +12,7 @@ struct EyesView: View {
     @State private var finished = false
 
     var body: some View {
-        TimelineView(.animation) { tl in
+        TimelineView(.animation(minimumInterval: 1.0 / 30)) { tl in
             let t = tl.date.timeIntervalSince(start)
             let left = max(0, Self.duration - t)
             VStack(spacing: 0) {

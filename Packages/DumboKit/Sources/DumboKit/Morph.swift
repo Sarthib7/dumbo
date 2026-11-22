@@ -341,7 +341,7 @@ public struct MorphView: View {
     }
 
     public var body: some View {
-        TimelineView(.animation(paused: freeze != nil)) { tl in
+        TimelineView(.animation(minimumInterval: 1.0 / 30, paused: freeze != nil)) { tl in
             Canvas { ctx, size in
                 let wall = tl.date.timeIntervalSinceReferenceDate
                 if sim.shape != shape { sim.retarget(shape, at: wall) }

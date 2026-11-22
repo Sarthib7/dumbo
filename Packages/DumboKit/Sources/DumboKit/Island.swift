@@ -68,7 +68,7 @@ public struct IslandState: Codable, Hashable, Sendable {
         let session = DumboEngine.currentSession(at: date, in: data)
         let today = calendar.startOfDay(for: date)
         let energy = session?.energy ?? 100
-        let drain = data.settings.mode.drainMinutes * (data.settings.demo ? 2 : 60)
+        let drain = data.settings.mode.drainMinutes * 60
         var state = IslandState(
             // Screen-on time, not wall-clock time since the session began; the island ticks it live from here.
             sessionStart: date.addingTimeInterval(-60 * Double(session?.minutes ?? 0)),

@@ -70,20 +70,18 @@ final class AppModel: ObservableObject {
     }
 
     func update(_ change: (inout Settings) -> Void) {
-        let wasDemo = settings.demo
         mutate { change(&$0.settings) }
-        if settings.demo != wasDemo { scheduleTicker() }
     }
 
-    /// Ticks every 2 s only in demo mode, every 30 s otherwise, and not at all in the background.
+    /// Ticks once a minute while in the foreground and never in the background; the island counts its own timers.
     private func scheduleTicker() {
         ticker?.invalidate()
         ticker = nil
         guard isActive else { return }
-        let t = Timer(timeInterval: settings.demo ? 2 : 30, repeats: true) { [weak self] _ in
+        let t = Timer(timeInterval: 60, repeats: true) { [weak self] _ in
             Task { @MainActor in self?.tick() }
         }
-        t.tolerance = settings.demo ? 0.1 : 5
+        t.tolerance = 15
         RunLoop.main.add(t, forMode: .common)
         ticker = t
     }
@@ -118,14 +116,6 @@ final class AppModel: ObservableObject {
         start(kind)
     }
 
-    func loadSampleWeek() {
-        var sample = SampleData.make(now: .now, settings: settings)
-        mutate { data in
-            sample.cursor = data.cursor
-            data = sample
-        }
-    }
-
     func resetAll() {
         var fresh = DumboData()
         fresh.settings = settings
@@ -136,28 +126,12 @@ final class AppModel: ObservableObject {
         }
     }
 
-    // MARK: Demo
-
-    /// In demo mode every tick (2 s) counts as one minute of screen use.
     private func tick() {
         now = Date()
-        guard settings.demo else {
-            // The monitor extension writes from another process, so pick up its changes here.
-            reload()
-            if data.activePrompt != nil, now.timeIntervalSince(data.activePrompt!.started) > DumboEngine.promptTimeout {
-                mutate { DumboEngine.expirePrompt(at: .now, in: &$0) }
-            }
-            return
-        }
-        guard exercise == nil else { return }
-        var due: PromptKind?
-        mutate(alert: false) { data in
-            due = DumboEngine.recordUse(at: .now, in: &data)
-            if let due { DumboEngine.show(due, at: .now, in: &data) }
-        }
-        if due != nil {
-            let snapshot = data
-            Task { await IslandController.sync(data: snapshot, alert: true) }
+        // The monitor extension writes from another process, so pick up its changes here.
+        reload()
+        if data.activePrompt != nil, now.timeIntervalSince(data.activePrompt!.started) > DumboEngine.promptTimeout {
+            mutate { DumboEngine.expirePrompt(at: .now, in: &$0) }
         }
     }
 

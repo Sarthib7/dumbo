@@ -50,10 +50,8 @@ struct SettingsView: View {
                 }
 
                 Section {
-                    Toggle("Demo mode (2 s = 1 min)", isOn: binding(\.demo))
-                    Button("Load a sample week") { model.loadSampleWeek() }
                     Button("Reset all data", role: .destructive) { model.resetAll() }
-                } header: { Text("Demo") } footer: { Text("Everything stays on this iPhone. Dumbo has no account and no server.") }
+                } header: { Text("Data") } footer: { Text("Everything stays on this iPhone. Dumbo has no account and no server.") }
             }
             .navigationTitle("Settings")
             .familyActivityPicker(isPresented: $picking, selection: $pickerSelection)

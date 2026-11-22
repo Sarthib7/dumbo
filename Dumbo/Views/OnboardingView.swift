@@ -28,7 +28,7 @@ struct OnboardingView: View {
         .onChangeOf(picking) { open in
             if !open {
                 screenTime.save(selection)
-                finish(demo: false)
+                finish()
             }
         }
     }
@@ -48,7 +48,7 @@ struct OnboardingView: View {
     var energy: some View {
         VStack(spacing: 18) {
             Spacer()
-            TimelineView(.animation) { tl in
+            TimelineView(.animation(minimumInterval: 1.0 / 30)) { tl in
                 let t = tl.date.timeIntervalSinceReferenceDate.truncatingRemainder(dividingBy: 6) / 6
                 HeartView(energy: 100 - t * 100).frame(width: 140, height: 140)
             }
@@ -95,7 +95,7 @@ struct OnboardingView: View {
                 }
             } label: { primaryLabel("Allow Screen Time") }
             if let e = screenTime.lastError { Text(e).font(.footnote).foregroundStyle(.red).multilineTextAlignment(.center) }
-            Button("Try the demo instead") { finish(demo: true) }
+            Button("Not now") { finish() }
                 .foregroundStyle(Palette.muted).padding(.bottom, 30)
         }
         .padding(24)
@@ -107,11 +107,8 @@ struct OnboardingView: View {
             .background(Capsule().fill(Palette.ember))
     }
 
-    func finish(demo: Bool) {
-        model.update {
-            $0.onboarded = true
-            $0.demo = demo
-        }
+    func finish() {
+        model.update { $0.onboarded = true }
         model.becameActive()
     }
 }

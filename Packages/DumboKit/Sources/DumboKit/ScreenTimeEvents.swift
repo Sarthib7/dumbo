@@ -2,7 +2,8 @@ import Foundation
 
 /// Threshold schedule for the Screen Time monitor: every minute for 3 h, then every 3 min up to 12 h.
 public enum ScreenTimeEvents {
-    public static let thresholds: [Int] = Array(1...180) + Array(stride(from: 183, through: 720, by: 3))
+    /// Each threshold wakes the monitor once, so checkpoints are every 2 min for 4 h, then every 5 min.
+    public static let thresholds: [Int] = Array(stride(from: 2, through: 240, by: 2)) + Array(stride(from: 245, through: 720, by: 5))
 
     public static func name(for minutes: Int) -> String { "m\(minutes)" }
 
