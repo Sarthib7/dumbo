@@ -7,7 +7,7 @@ options:
 settings:
   base:
     SWIFT_VERSION: "5.0"
-    MARKETING_VERSION: "0.1.0"
+    MARKETING_VERSION: "1.0"
     CURRENT_PROJECT_VERSION: "1"
     DEVELOPMENT_TEAM: "${APPLE_TEAM_ID}"
     # Set to "-nost" to sign without Family Controls (TestFlight before Apple approves distribution).
@@ -43,6 +43,8 @@ targets:
     info:
       path: Dumbo/Info.plist
       properties:
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
         CFBundleDisplayName: Dumbo
         ITSAppUsesNonExemptEncryption: false
         CFBundleURLTypes:
@@ -73,6 +75,8 @@ targets:
     info:
       path: DumboWidgets/Info.plist
       properties:
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
         CFBundleDisplayName: Dumbo
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
@@ -91,6 +95,8 @@ targets:
     info:
       path: DumboMonitor/Info.plist
       properties:
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
         CFBundleDisplayName: DumboMonitor
         NSExtension:
           NSExtensionPointIdentifier: com.apple.deviceactivity.monitor-extension
