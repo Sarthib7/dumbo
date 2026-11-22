@@ -11,7 +11,7 @@ struct BreatheView: View {
 
     var body: some View {
         ZStack {
-            TimelineView(.animation(paused: frozenTime != nil)) { tl in
+            TimelineView(.animation(minimumInterval: 1.0 / 30, paused: frozenTime != nil)) { tl in
                 let t = frozenTime ?? tl.date.timeIntervalSince(start)
                 let lvl = breathLevel(t)
                 ZStack {

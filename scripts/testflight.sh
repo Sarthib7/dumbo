@@ -35,6 +35,7 @@ xcodebuild archive \
   -project Dumbo.xcodeproj -scheme Dumbo -configuration Release \
   -destination 'generic/platform=iOS' -archivePath "$OUT/Dumbo.xcarchive" \
   DEVELOPMENT_TEAM="$APPLE_TEAM_ID" CURRENT_PROJECT_VERSION="$BUILD_NUMBER" DUMBO_ENT_SUFFIX="$SUFFIX" DUMBO_WIDGETS_ENT_SUFFIX="$WIDGETS_SUFFIX" \
+  DUMBO_SCREEN_TIME="$([ "$SCREEN_TIME" = "1" ] && echo YES || echo NO)" \
   CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY="Apple Distribution"
 
 PROFILES=""

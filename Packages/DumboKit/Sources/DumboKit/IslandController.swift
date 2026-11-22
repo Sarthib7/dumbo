@@ -34,6 +34,13 @@ public enum IslandController {
         }
     }
 
+    /// Pushes a state built by the caller, e.g. a breathing step.
+    public static func show(_ state: IslandState, staleDate: Date?) async {
+        for activity in activities {
+            await activity.update(ActivityContent(state: state, staleDate: staleDate))
+        }
+    }
+
     public static func endAll() async {
         for activity in activities {
             await activity.end(nil, dismissalPolicy: .immediate)

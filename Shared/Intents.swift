@@ -32,3 +32,25 @@ struct CompletePromptIntent: LiveActivityIntent {
         return .result()
     }
 }
+
+/// Plays the breathing exercise inside the island. The break is credited up front and the bars run on
+/// system timers, so the island keeps animating even if iOS suspends this intent; per-step updates only
+/// add the swelling/shrinking glyph.
+@available(iOS 17.0, *)
+struct StartBreatheIntent: LiveActivityIntent {
+    static var title: LocalizedStringResource = "Breathe in the island"
+
+    func perform() async throws -> some IntentResult {
+        let start = Date.now
+        let data = DumboStore.shared.update { DumboEngine.complete(.breathe, at: start, in: &$0) }
+        let base = IslandState.make(from: data, at: start)
+        let end = start.addingTimeInterval(IslandState.breathTotal)
+        for step in 0..<IslandState.breathSteps {
+            await IslandController.show(base.breathing(start: start, step: step), staleDate: end)
+            let next = start.addingTimeInterval(IslandState.breathOffset(step + 1))
+            guard (try? await Task.sleep(for: .seconds(max(0, next.timeIntervalSinceNow)))) != nil else { break }
+        }
+        await IslandController.sync(data: DumboStore.shared.load())
+        return .result()
+    }
+}

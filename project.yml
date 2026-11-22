@@ -12,6 +12,7 @@ settings:
     DEVELOPMENT_TEAM: "${APPLE_TEAM_ID}"
     # Set to "-nost" to sign without Family Controls (TestFlight before Apple approves distribution).
     DUMBO_ENT_SUFFIX: ""
+    DUMBO_SCREEN_TIME: "YES"
     # "-bare" signs the widgets without the App Group.
     DUMBO_WIDGETS_ENT_SUFFIX: ""
     CODE_SIGN_STYLE: Automatic
@@ -43,6 +44,7 @@ targets:
     info:
       path: Dumbo/Info.plist
       properties:
+        DumboScreenTime: "$(DUMBO_SCREEN_TIME)"
         CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
         CFBundleShortVersionString: "$(MARKETING_VERSION)"
         CFBundleDisplayName: Dumbo

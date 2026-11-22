@@ -11,10 +11,6 @@ struct HomeView: View {
                     LogoMark().frame(width: 26, height: 26)
                     Text("dumbo").font(.system(size: 22, weight: .bold, design: .rounded))
                     Spacer()
-                    if model.settings.demo {
-                        Text("DEMO · 1 s = 1 min").font(.system(size: 10, weight: .bold)).foregroundStyle(.black)
-                            .padding(.horizontal, 8).padding(.vertical, 3).background(Capsule().fill(Palette.ember))
-                    }
                 }
 
                 VStack(spacing: 6) {
@@ -30,9 +26,15 @@ struct HomeView: View {
                 .padding(.top, 8)
 
                 HStack(spacing: 10) {
-                    stat("screen on", formatMinutes(model.session?.minutes ?? 0))
+                    stat("this session", formatMinutes(model.session?.minutes ?? 0))
+                    stat("today", formatMinutes(model.today.screenMinutes))
                     stat("next nudge", "\(model.minutesToNextNudge)m")
-                    stat("mode", model.settings.mode.title)
+                }
+
+                HStack(spacing: 10) {
+                    tally("drop.fill", model.today.glasses, "water", Palette.water)
+                    tally("wind", model.today.breaths, "breaths", Palette.breath)
+                    tally("eye", model.today.eyeBreaks, "eyes", Palette.eyes)
                 }
 
                 VStack(alignment: .leading, spacing: 10) {
@@ -59,6 +61,16 @@ struct HomeView: View {
             .padding(20)
         }
         .background(Color.black)
+    }
+
+    func tally(_ symbol: String, _ n: Int, _ label: String, _ color: Color) -> some View {
+        HStack(spacing: 6) {
+            Image(systemName: symbol).font(.system(size: 12))
+            Text("\(n)").font(.system(size: 17, weight: .bold, design: .rounded)).monospacedDigit()
+            Text(label).font(.caption).foregroundStyle(Palette.muted)
+        }
+        .foregroundStyle(color)
+        .frame(maxWidth: .infinity)
     }
 
     func stat(_ label: String, _ value: String) -> some View {

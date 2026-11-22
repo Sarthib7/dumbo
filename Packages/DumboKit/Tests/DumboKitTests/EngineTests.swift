@@ -37,7 +37,7 @@ final class EngineTests: XCTestCase {
         XCTAssertGreaterThan(d.sessions[1].energy, 97)
     }
 
-    func testPromptsRotateEveryTenMinutes() {
+    func testPromptsFavorBreathingEveryTenMinutes() {
         var d = DumboData()
         var due: [PromptKind] = []
         for m in 1...30 {
@@ -47,7 +47,7 @@ final class EngineTests: XCTestCase {
                 DumboEngine.skip(at: minute(m), in: &d)
             }
         }
-        XCTAssertEqual(due, [.eyes, .breathe, .sip])
+        XCTAssertEqual(due, [.breathe, .eyes, .breathe])
     }
 
     func testNoNewPromptWhileOneIsActive() {

@@ -35,7 +35,14 @@ final class ScreenTimeService: ObservableObject {
         !(selection.applicationTokens.isEmpty && selection.categoryTokens.isEmpty && selection.webDomainTokens.isEmpty)
     }
 
+    /// TestFlight builds ship without Family Controls until Apple approves it for distribution.
+    static let available = Bundle.main.object(forInfoDictionaryKey: "DumboScreenTime") as? String != "NO"
+
     func requestAuthorization() async {
+        guard Self.available else {
+            lastError = "Screen Time is waiting on Apple's approval for this build. Breaks and water logging still work meanwhile."
+            return
+        }
         do {
             try await AuthorizationCenter.shared.requestAuthorization(for: .individual)
             lastError = nil

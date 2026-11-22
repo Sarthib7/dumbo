@@ -70,6 +70,11 @@ struct TodayView: View {
                     }
                 }
             }
+            HStack(spacing: 10) {
+                habit("water", "\(day.glasses)", "/\(waterGoal)", Palette.water, Double(day.glasses) / Double(max(1, waterGoal)))
+                habit("breaths", "\(day.breaths)", "", Palette.breath, Double(day.breaths) / 5)
+                habit("eyes", "\(day.eyeBreaks)", "", Palette.eyes, Double(day.eyeBreaks) / 8)
+            }
             Card {
                 Caption("sessions · \(day.sessions.count)")
                 SessionTimeline(sessions: day.sessions, day: day.date).frame(height: 26)
@@ -84,10 +89,11 @@ struct TodayView: View {
                 }
                 .font(.footnote).foregroundStyle(Palette.muted).padding(.top, 2)
             }
-            HStack(spacing: 10) {
-                habit("water", "\(day.glasses)", "/\(waterGoal)", Palette.water, Double(day.glasses) / Double(max(1, waterGoal)))
-                habit("breaths", "\(day.breaths)", "", Palette.breath, Double(day.breaths) / 5)
-                habit("eyes", "\(day.eyeBreaks)", "", Palette.eyes, Double(day.eyeBreaks) / 8)
+            if !day.breakdown.isEmpty {
+                Card {
+                    Caption("each session")
+                    ForEach(day.breakdown) { SessionRow(stats: $0) }
+                }
             }
             Text(quip).font(.subheadline).foregroundStyle(Color(white: 0.85)).padding(.top, 4)
         }
@@ -119,6 +125,33 @@ struct TodayView: View {
             }
             .frame(height: 4)
         }
+    }
+}
+
+struct SessionRow: View {
+    let stats: SessionStats
+
+    var body: some View {
+        HStack(spacing: 12) {
+            Text(stats.start.formatted(date: .omitted, time: .shortened))
+                .font(.footnote).foregroundStyle(Palette.muted).frame(width: 64, alignment: .leading)
+            Text(formatMinutes(stats.minutes)).font(.system(size: 15, weight: .bold, design: .rounded)).monospacedDigit()
+            Spacer()
+            count("drop.fill", stats.glasses, Palette.water)
+            count("wind", stats.breaths, Palette.breath)
+            count("eye", stats.eyeBreaks, Palette.eyes)
+            Text("\(Int(stats.minEnergy))%").font(.footnote.bold()).foregroundStyle(Palette.ember2)
+                .frame(width: 38, alignment: .trailing)
+        }
+        .padding(.vertical, 3)
+    }
+
+    func count(_ symbol: String, _ n: Int, _ color: Color) -> some View {
+        HStack(spacing: 3) {
+            Image(systemName: symbol).font(.system(size: 10))
+            Text("\(n)").font(.footnote.bold()).monospacedDigit()
+        }
+        .foregroundStyle(n > 0 ? color : Color(white: 0.3))
     }
 }
 

@@ -11,8 +11,21 @@ public struct DaySummary: Identifiable, Equatable, Sendable {
     public var glasses: Int
     public var breaths: Int
     public var eyeBreaks: Int
+    /// One row per screen session, newest first.
+    public var breakdown: [SessionStats] = []
 
     public var id: Date { date }
+}
+
+/// What happened during one screen session.
+public struct SessionStats: Identifiable, Equatable, Sendable {
+    public var id: UUID
+    public var start: Date
+    public var minutes: Int
+    public var minEnergy: Double
+    public var glasses: Int
+    public var breaths: Int
+    public var eyeBreaks: Int
 }
 
 public struct WeekSummary: Equatable, Sendable {
@@ -61,7 +74,19 @@ public enum Summarizer {
             promptsDone: done.filter { $0.kind != .empty }.count,
             glasses: data.water.filter { range.contains($0) }.count,
             breaths: done.filter { $0.kind == .breathe }.count,
-            eyeBreaks: done.filter { $0.kind == .eyes }.count
+            eyeBreaks: done.filter { $0.kind == .eyes }.count,
+            breakdown: sessions.indices.reversed().map { i in
+                let s = sessions[i]
+                // A session owns habits until the gap runs out or the next session starts, within this day.
+                var end = s.lastActivity.addingTimeInterval(DumboEngine.newSessionGap)
+                if i + 1 < sessions.count { end = min(end, sessions[i + 1].start) }
+                let span = max(s.start, start)..<max(max(s.start, start), min(end, range.upperBound))
+                let doneHere = done.filter { span.contains($0.date) }
+                return SessionStats(id: s.id, start: s.start, minutes: minutes(of: s, in: range), minEnergy: s.minEnergy,
+                                    glasses: data.water.filter { span.contains($0) }.count,
+                                    breaths: doneHere.filter { $0.kind == .breathe }.count,
+                                    eyeBreaks: doneHere.filter { $0.kind == .eyes }.count)
+            }
         )
     }
 
