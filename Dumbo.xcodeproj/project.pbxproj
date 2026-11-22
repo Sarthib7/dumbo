@@ -87,11 +87,13 @@
 		58D907FC07BD18676D09C4D1 /* Intents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intents.swift; sourceTree = "<group>"; };
 		6AECA2E6F7F442331FD5E1DE /* DumboLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumboLiveActivity.swift; sourceTree = "<group>"; };
 		7ABF847892FA85497648B276 /* Dumbo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dumbo.entitlements; sourceTree = "<group>"; };
+		7F03A0F870245A5CEB6EF0DE /* Dumbo-nost.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Dumbo-nost.entitlements"; sourceTree = "<group>"; };
 		8223B9744ABCE2803D13AC7F /* EyesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyesView.swift; sourceTree = "<group>"; };
 		9093AF866E55C98E2874FED9 /* DumboKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = DumboKit; path = Packages/DumboKit; sourceTree = SOURCE_ROOT; };
 		95F7420F2BA047B6679146A7 /* DumboApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumboApp.swift; sourceTree = "<group>"; };
 		97D814057CBFF6A16D7DACAA /* silence.caf */ = {isa = PBXFileReference; path = silence.caf; sourceTree = "<group>"; };
 		B0510D449BA73BACFB3B4A00 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		B084D75639F3AAA7B5320651 /* DumboMonitor-nost.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "DumboMonitor-nost.entitlements"; sourceTree = "<group>"; };
 		B13DCC55C96C91C2CEFE7124 /* DumboWidgetsBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumboWidgetsBundle.swift; sourceTree = "<group>"; };
 		B495E4140DCED774D5993598 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		B5DD65540415A3650D8C3120 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 		7113BDA49F1BA1680169AD6D /* DumboMonitor */ = {
 			isa = PBXGroup;
 			children = (
+				B084D75639F3AAA7B5320651 /* DumboMonitor-nost.entitlements */,
 				1262BBCFD79AFEECBEFD4802 /* DumboMonitor.entitlements */,
 				2AC6A732A81082F04D5B1C7C /* DumboMonitorExtension.swift */,
 				1AF70F9A0EE372C87A11E656 /* Info.plist */,
@@ -224,6 +227,7 @@
 			children = (
 				2B6A5D8A91C98C28AC61EEB3 /* AppModel.swift */,
 				3C4B2B7D50EB401E5CD70EAC /* Assets.xcassets */,
+				7F03A0F870245A5CEB6EF0DE /* Dumbo-nost.entitlements */,
 				7ABF847892FA85497648B276 /* Dumbo.entitlements */,
 				95F7420F2BA047B6679146A7 /* DumboApp.swift */,
 				1E606FDDFCB0D4D9EF39D2EF /* Info.plist */,
@@ -318,15 +322,15 @@
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					19650701258147C05522544C = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = "${APPLE_TEAM_ID}";
 						ProvisioningStyle = Automatic;
 					};
 					687C28F6E385156F48A2A385 = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = "${APPLE_TEAM_ID}";
 						ProvisioningStyle = Automatic;
 					};
 					7FDC01E5BEF9D256B75EE707 = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = "${APPLE_TEAM_ID}";
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -462,7 +466,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = "${APPLE_TEAM_ID}";
+				DUMBO_ENT_SUFFIX = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -524,7 +529,8 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = "${APPLE_TEAM_ID}";
+				DUMBO_ENT_SUFFIX = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -560,7 +566,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Dumbo/Dumbo.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Dumbo/Dumbo$(DUMBO_ENT_SUFFIX).entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Dumbo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -608,7 +614,7 @@
 		5DEC427930B6C06983742EF7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = DumboMonitor/DumboMonitor.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "DumboMonitor/DumboMonitor$(DUMBO_ENT_SUFFIX).entitlements";
 				INFOPLIST_FILE = DumboMonitor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -626,7 +632,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Dumbo/Dumbo.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Dumbo/Dumbo$(DUMBO_ENT_SUFFIX).entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Dumbo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -642,7 +648,7 @@
 		B1B23593829694DF2E88D732 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = DumboMonitor/DumboMonitor.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "DumboMonitor/DumboMonitor$(DUMBO_ENT_SUFFIX).entitlements";
 				INFOPLIST_FILE = DumboMonitor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
